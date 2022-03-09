@@ -28,6 +28,7 @@
                     <div class="card card-primary">
                         <div class="card-header"><h4 >Login SSO Telkom University</h4></div>
                         <div class="card-body">
+                            {{ session()->get('error') }}
                             <a href="{{ url('auth/callback') }}" style="text-decoration:none; color: white">
                             <button class="btn btn-lg btn-block btn-primary" style="background-color: #dd4b39;" type="submit">
                                 <i class="fab fa-google me-2"></i>

@@ -21,10 +21,7 @@ class UserFactory extends Factory
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->bothify('????????##@student.telkomuniversity.ac.id'),
             'email_verified_at' => now(),
-            'social_id'=> $this->faker->numerify('######################'),
-            'social_type' => 'google',
             'role' => $this->faker->randomElement(['guest','user','super_user']),
-            'access_token' => Str::random(10),
         ];
 
     }

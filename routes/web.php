@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleProviderController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ItemController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,10 +19,15 @@ Route::get('auth/callback', [GoogleProviderController::class, 'redirectToGoogle'
 Route::get('auth/google/callback', [GoogleProviderController::class, 'handleCallback']);
 
 Route::get('/', function () {
-    return view('welcome');
+    $title = "Halaman Awal";
+    return view('index', compact('title'));
 });
 
 Route::group(['prefix' => 'user'], function (){
     Route::get('/login', [UserController::class, 'view_login']);
+    Route::get('/logout', [UserController::class, 'logout']);
 });
+
+Route::resource('item', ItemController::class);
+
 

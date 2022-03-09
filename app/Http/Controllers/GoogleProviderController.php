@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Laravel\Socialite\Facades\Socialite;
@@ -21,10 +20,10 @@ class GoogleProviderController extends Controller
         $user = Socialite::driver('google')->user();
 
         if (empty($user->email)) {
-            return Redirect::to(env('BASE_URL') . '/login');
+            return Redirect::to(env('BASE_URL') . '/user/login');
         }
 
-        $auth_user = $this->findOrCreateUser($user, 'google');
+        $auth_user = $this->findOrCreateUser($user);
 
         if($auth_user){
             Auth::loginUsingId($auth_user->id);
@@ -33,12 +32,10 @@ class GoogleProviderController extends Controller
             return redirect('/')->with('success', 'Sukses Melakukan Login');
         }
 
-
-
         return redirect('/user/login')->with('error', 'Login Harus Menggunakan SSO Telkom University');
     }
 
-    public function findOrCreateUser($providerUser, $provider)
+    public function findOrCreateUser($providerUser)
     {
         $user = User::where('email', $providerUser->getEmail())->first();
 
@@ -53,6 +50,7 @@ class GoogleProviderController extends Controller
                 $user = User::create([
                     'name' => $providerUser->name,
                     'email' => $providerUser->email,
+                    'photo' => $providerUser->avatar,
                     'email_verified_at' => Carbon::now(),
                 ]);
             }
