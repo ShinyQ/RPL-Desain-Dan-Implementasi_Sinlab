@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleProviderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RequestItemController;
+use App\Http\Controllers\TransactionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,16 +21,23 @@ use App\Http\Controllers\ItemController;
 Route::get('auth/callback', [GoogleProviderController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleProviderController::class, 'handleCallback']);
 
-Route::get('/', function () {
-    $title = "Halaman Awal";
-    return view('index', compact('title'));
-});
-
 Route::group(['prefix' => 'user'], function (){
     Route::get('/login', [UserController::class, 'view_login']);
     Route::get('/logout', [UserController::class, 'logout']);
 });
 
-Route::resource('item', ItemController::class);
+Route::group(['middleware' => 'LoggedIn'], function (){
+    Route::get('/', [DashboardController::class, 'index']);
+    Route::resource('transaction', TransactionController::class)->only(['index', 'store']);
+});
 
+Route::group(['middleware' => 'user'], function (){
+    Route::resource('/request', RequestItemController::class)->only(['index', 'store']);
+});
+
+Route::group(['prefix' => 'admin', 'middleware' => 'super_user'], function (){
+    Route::resource('item', ItemController::class);
+    Route::resource('request', RequestItemController::class);
+    Route::resource('transaction', TransactionController::class);
+});
 

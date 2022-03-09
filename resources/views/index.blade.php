@@ -1,11 +1,12 @@
 @extends('layout.main')
 @section('content')
     <div class="section-header">
-        <h1>Blank Page</h1>
+        <h1>{{ $title }}</h1>
     </div>
 
     <div class="section-body">
-        {{ session()->get('user') }}
-        {{ session()->get('success') }}
+        <div class="card">
+            <div class="card-body"></div>
+        </div>
     </div>
 @endsection

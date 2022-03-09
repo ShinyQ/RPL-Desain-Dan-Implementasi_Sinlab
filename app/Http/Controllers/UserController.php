@@ -7,6 +7,10 @@ use App\Models\User;
 class UserController extends Controller
 {
     public function view_login(){
+        if (session()->get('user')){
+            return redirect()->back();
+        }
+
         return view('login');
     }
 

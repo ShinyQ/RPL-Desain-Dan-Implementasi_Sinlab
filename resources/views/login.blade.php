@@ -26,7 +26,8 @@
                     </div>
 
                     <div class="card card-primary">
-                        <div class="card-header"><h4 >Login SSO Telkom University</h4></div>
+                        <div class="card-header" style="padding-right: 0; width: 75%">
+                            <h4 ><div style="text-align: center;">Login SSO Telkom University</div></h4></div>
                         <div class="card-body">
                             {{ session()->get('error') }}
                             <a href="{{ url('auth/callback') }}" style="text-decoration:none; color: white">
