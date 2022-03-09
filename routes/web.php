@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\GoogleProviderController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,10 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('auth/callback', [GoogleProviderController::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [GoogleProviderController::class, 'handleCallback']);
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', function () {
-    return view('login');
+Route::group(['prefix' => 'user'], function (){
+    Route::get('/login', [UserController::class, 'view_login']);
 });
+

@@ -13,14 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('transaction_items', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('ktm')->nullable();
-            $table->string('phone')->nullable();
-            $table->enum('role', ['guest','user','super_user'])->default('guest');
+            $table->foreignId('transaction_id')->constrained();
+            $table->foreignId('item_id')->constrained();
+            $table->integer('qty');
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('transaction_items');
     }
 };

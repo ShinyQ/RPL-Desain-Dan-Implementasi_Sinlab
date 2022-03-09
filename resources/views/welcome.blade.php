@@ -403,6 +403,7 @@
                 </div>
 
                 <div class="section-body">
+                    {{ request()->session()->get('user') }}
                 </div>
             </section>
         </div>
