@@ -1,0 +1,60 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: sinlab
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: sinlab
+    container_name: sinlab-app
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./:/app
+    depends_on:
+      - db
+    command: bash -c 'php artisan migrate --seed && php artisan serve --host=0.0.0.0 --port=8181'
+    ports:
+      - "8009:8181"
+    networks:
+      - sinlab
+
+  worker:
+    image: sinlab
+    container_name: sinlab-worker
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./:/app
+    depends_on:
+      - db
+      - app
+    command: bash -c 'php artisan queue:work'
+    networks:
+      - sinlab
+
+  db:
+    image: mysql:5.7
+    container_name: sinlab-db
+    restart: unless-stopped
+    environment:
+      - MYSQL_DATABASE=sinlab
+      - MYSQL_ROOT_PASSWORD=toor
+      - MYSQL_PASSWORD=toor
+      - MYSQL_USER=sinlab
+      - SERVICE_TAGS=dev
+      - SERVICE_NAME=mysql
+      - TZ=Asia/Jakarta
+    volumes:
+      - db_data:/var/lib/mysql
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci','--default-time-zone=+07:00']
+    networks:
+      - sinlab
+
+networks:
+  sinlab:
+    driver: bridge
+volumes:
+    db_data:
