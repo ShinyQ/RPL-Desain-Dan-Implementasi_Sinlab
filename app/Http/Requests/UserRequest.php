@@ -27,8 +27,10 @@ class UserRequest extends FormRequest
             return [
                 'name' =>['required'],
                 'email'=>['required', 'email', 'unique:users'],
-                'photo'=>[],
+                'photo'=>[''],
                 'password'=>['required'],
+                'ktm'=>[''],
+                'phone'=>[''],
             ];
         }else {
             return [
@@ -36,6 +38,8 @@ class UserRequest extends FormRequest
                 'email'=>['string','email'],
                 'photo'=>['string'],
                 'password'=>['string'],
+                'ktm'=>['string'],
+                'phone'=>['string'],
             ];
         }
     }
