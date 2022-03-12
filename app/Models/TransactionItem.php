@@ -9,6 +9,8 @@ class TransactionItem extends Model
 {
     use HasFactory;
 
+    public $fillable = ['item_id','transaction_id','transaction_id', 'item_id', 'qty'];
+
     public function item(){
         return $this->hasOne(Item::class, 'id', 'item_id');
     }
