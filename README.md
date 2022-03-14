@@ -6,6 +6,9 @@ Inventaris laboratorium merupakan sistem yang baru kegunaannya untuk memanajemen
 
 | Stack                                         | Version |
 |-----------------------------------------------|:-------:|
+| [Ubuntu Server](https://ubuntu.com/)          |  18.04  |
+| [Nginx](https://www.nginx.com/)               | 1.14.0  |
+| [Docker](https://www.nginx.com/)              |20.10.12 |
 | [Laravel](https://github.com/laravel/laravel) |   9.x   |
 | [Bootstrap](https://getbootstrap.com/)        |   4.6   |
 | [Stisla](https://github.com/stisla/stisla)    |  2.2.0  |
@@ -33,7 +36,7 @@ Inventaris laboratorium merupakan sistem yang baru kegunaannya untuk memanajemen
 |                                          |   Menyetujui / menolak saran inventaris   |
 |                                          |   Melihat daftar peminjaman inventaris    |
 |                                          |           Cari data peminjaman            |
-|                                          | Menyetujui/menolak peminjaman inventaris  |
+|                                          | Menyetujui / menolak peminjaman inventaris|
 |                                          |    Verifikasi pengembalian inventaris     |
 |                                          |     Melihat data statistik inventaris     |
 |                                          |  Membuat laporan tentang inventaris lab   |
