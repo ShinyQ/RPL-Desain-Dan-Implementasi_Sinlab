@@ -14,6 +14,9 @@ class RequestItemController extends Controller
      */
     public function index()
     {
+        $items = RequestItem::latest()->paginate(5);
+        $title = "Halaman Request Item";
+        return view('item.index', compact('title', 'items'));
         //
     }
 
@@ -24,7 +27,8 @@ class RequestItemController extends Controller
      */
     public function create()
     {
-        //
+        $title = "Halaman Create Request Item";
+        return view('item.create', compact('title'));
     }
 
     /**
@@ -35,7 +39,7 @@ class RequestItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**

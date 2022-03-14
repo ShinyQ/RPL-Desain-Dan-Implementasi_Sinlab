@@ -7,7 +7,7 @@
     <div class="section-body">
         <div class="card">
             <div class="card-header">
-                <a href="{{ url('admin/item/create') }}" class="btn btn-primary">+ Tambah Barang Inventaris</a>
+                <a href="{{ url('request/create') }}" class="btn btn-primary">+ Tambah Barang Inventaris</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">

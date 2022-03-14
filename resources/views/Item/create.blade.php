@@ -23,7 +23,7 @@
                                 <label>Jumlah Barang</label>
                                 <input type="number" min="1" class="form-control" name="qty">
                             </div>
-                            <input style="float: right" class="btn btn-primary" type="button" value="Tambah Data">
+                            <input style="float: right" class="btn btn-primary" type="submit" value="Tambah Data">
                         </div>
                     </div>
                 </div>

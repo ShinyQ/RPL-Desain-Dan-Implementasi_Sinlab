@@ -31,9 +31,8 @@ Route::group(['middleware' => 'LoggedIn'], function (){
     Route::resource('transaction', TransactionController::class)->only(['index', 'store']);
 });
 
-Route::group(['middleware' => 'user'], function (){
-    Route::resource('/request', RequestItemController::class)->only(['index', 'store']);
-});
+Route::resource('/request', RequestItemController::class)->only(['index', 'store', 'create']);
+
 
 Route::group(['prefix' => 'admin', 'middleware' => 'superuser'], function (){
     Route::resource('item', ItemController::class);
