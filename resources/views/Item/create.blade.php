@@ -5,28 +5,33 @@
     </div>
 
     <div class="section-body">
-        <form action="" method="POST">
+        <form action="{{ route('item.store') }}" method="POST">
             @csrf
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
                             <div class="form-group">
-                                <label>Default Input Text</label>
+                                <label>Name</label>
                                 <input type="text" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label>Phone Number (US Format)</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fas fa-phone"></i>
-                                        </div>
-                                    </div>
-                                    <input type="text" class="form-control phone-number">
-                                </div>
+                                <label>Description</label>
+                                <input type="text" class="form-control">
                             </div>
-                            <input style="float: right" class="btn btn-primary" type="button" value="Tambah Data">
+                            <div class="form-group">
+                                <label>Quantity</label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Status</label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Feedback</label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <input style="float: right" class="btn btn-primary" type="submit" value="Tambah Data">
                         </div>
                     </div>
                 </div>
