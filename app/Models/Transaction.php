@@ -9,6 +9,8 @@ class Transaction extends Model
 {
     use HasFactory;
 
+    public $fillable = ['user_id', 'admin_id', 'status', 'deadline','feedback'];
+
     public function user(){
         return $this->hasOne(User::class, 'id', 'user_id');
     }
