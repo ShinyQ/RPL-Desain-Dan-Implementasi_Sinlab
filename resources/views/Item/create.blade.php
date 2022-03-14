@@ -5,26 +5,23 @@
     </div>
 
     <div class="section-body">
-        <form action="" method="POST">
+        <form action="" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
                             <div class="form-group">
-                                <label>Default Input Text</label>
-                                <input type="text" class="form-control">
+                                <label>Nama Barang</label>
+                                <input type="text" class="form-control" name="name">
                             </div>
                             <div class="form-group">
-                                <label>Phone Number (US Format)</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fas fa-phone"></i>
-                                        </div>
-                                    </div>
-                                    <input type="text" class="form-control phone-number">
-                                </div>
+                                <label>Deskripsi Barang</label>
+                                <textarea style="height:100px" class="form-control" name="description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Jumlah Barang</label>
+                                <input type="number" min="1" class="form-control" name="qty">
                             </div>
                             <input style="float: right" class="btn btn-primary" type="button" value="Tambah Data">
                         </div>
@@ -33,10 +30,13 @@
 
                 <div class="col-md-6">
                     <div class="card">
+                        <div class="card-header">
+                            <h5>Upload Gambar Barang</h5>
+                        </div>
                         <div class="card-body">
                             <div style="text-align: center">
-                                <img width="200" id="blah" src="#" alt="your image" /> <br><br>
-                                <input class="form-control" accept="image/*" type='file' id="imgInp" />
+                                <img src="" width="300px" id="preview" style="margin-bottom: 2%">
+                                <input name="photo" type="file" id="filetag">
                             </div>
                         </div>
                     </div>
@@ -45,10 +45,24 @@
         </form>
     </div>
     <script>
-        imgInp.onchange = evt => {
-            const [file] = imgInp.files
-            if (file) {
-                blah.src = URL.createObjectURL(file)
+        var fileTag = document.getElementById("filetag"),
+            preview = document.getElementById("preview");
+
+        fileTag.addEventListener("change", function() {
+            changeImage(this);
+        });
+
+        function changeImage(input) {
+            var reader;
+
+            if (input.files && input.files[0]) {
+                reader = new FileReader();
+
+                reader.onload = function(e) {
+                    preview.setAttribute('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
             }
         }
     </script>

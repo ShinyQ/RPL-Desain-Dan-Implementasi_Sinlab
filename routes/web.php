@@ -35,7 +35,7 @@ Route::group(['middleware' => 'user'], function (){
     Route::resource('/request', RequestItemController::class)->only(['index', 'store']);
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => 'super_user'], function (){
+Route::group(['prefix' => 'admin', 'middleware' => 'superuser'], function (){
     Route::resource('item', ItemController::class);
     Route::resource('request', RequestItemController::class);
     Route::resource('transaction', TransactionController::class);
