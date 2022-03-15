@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('admin_id')->constrained('users');
             $table->string('status')->default('Menunggu Persetujuan');
             $table->datetime('deadline');
+            $table->string("reason");
             $table->string('feedback')->nullable();
             $table->timestamps();
         });

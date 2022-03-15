@@ -28,6 +28,7 @@ Route::group(['prefix' => 'user'], function (){
 
 Route::group(['middleware' => 'LoggedIn'], function (){
     Route::get('/', [DashboardController::class, 'index']);
+    Route::resource('item', ItemController::class);
     Route::resource('transaction', TransactionController::class)->only(['index', 'store']);
 });
 

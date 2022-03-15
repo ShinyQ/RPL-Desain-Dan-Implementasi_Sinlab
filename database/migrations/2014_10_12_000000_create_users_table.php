@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('photo')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('ktm')->nullable();
+            $table->boolean('is_verified')->default(0);
             $table->string('phone')->nullable();
             $table->enum('role', ['guest','user','super_user'])->default('guest');
             $table->timestamps();

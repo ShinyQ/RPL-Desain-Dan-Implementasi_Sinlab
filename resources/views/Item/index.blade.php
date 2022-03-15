@@ -6,9 +6,11 @@
 
     <div class="section-body">
         <div class="card">
+            @if(auth()->user()->role == 'super_user')
             <div class="card-header">
-                <a href="{{ url('request/create') }}" class="btn btn-primary">+ Tambah Barang Inventaris</a>
+                    <a href="{{ url('request/create') }}" class="btn btn-primary">+ Tambah Barang Inventaris</a>
             </div>
+            @endif
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="dataTable" class="table table-bordered table-md">
@@ -19,7 +21,9 @@
                             <th>Nama Barang</th>
                             <th>Deskripsi</th>
                             <th>Jumlah</th>
-                            <th>Tanggal Dibuat</th>
+                            @if(auth()->user()->role == 'super_user')
+                                <th>Tanggal Dibuat</th>
+                            @endif
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -31,10 +35,16 @@
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->description }}</td>
                             <td>{{ $item->qty }}</td>
-                            <td>{{ $item->created_at }}</td>
+                            @if(auth()->user()->role == 'super_user')
+                                <td>{{ $item->created_at }}</td>
                             <td>
-                                <a href="#" class="btn btn-secondary">Detail</a>
+                                <a href="#" class="btn btn-primary">Edit</a>
                             </td>
+                            @else
+                                <td>
+                                    <a href="#" class="btn btn-primary">Pinjam</a>
+                                </td>
+                            @endif
                         </tr>
                         @empty
                             Data Masih Kosong
