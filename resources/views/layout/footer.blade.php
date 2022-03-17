@@ -18,6 +18,8 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('assets/js/page/components-table.js') }}"></script>
+
+@stack('scripts')
 </body>
 
 </html>

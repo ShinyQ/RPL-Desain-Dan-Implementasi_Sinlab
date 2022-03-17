@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.png') }}">
     <title>Dashboard | {{ $title }}</title>
 
@@ -60,78 +61,78 @@
 
                     <ul class="sidebar-menu">
                         @if (auth()->user()->role == 'super_user')
-                        <li class="menu-header">Menu Utama</li>
-                        <li class="active">
-                            <a class="nav-link" href="{{ url('/') }}">
-                                <i class="fas fa-chart-bar"></i>
-                                <span>Halaman Dashboard</span>
-                            </a>
-                        </li>
+                            <li class="menu-header">Menu Utama</li>
+                            <li class="active">
+                                <a class="nav-link" href="{{ url('/') }}">
+                                    <i class="fas fa-chart-bar"></i>
+                                    <span>Halaman Dashboard</span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a class="nav-link" href="{{ url('admin/user') }}">
-                                <i class="fas fa-users"></i>
-                                <span>Daftar Pengguna</span>
-                            </a>
-                        </li>
+                            <li>
+                                <a class="nav-link" href="{{ url('admin/user') }}">
+                                    <i class="fas fa-users"></i>
+                                    <span>Daftar Pengguna</span>
+                                </a>
+                            </li>
 
-                        <li class="menu-header">Menu Inventaris</li>
-                        <li>
-                            <a class="nav-link" href="{{ url('admin/item') }}">
-                                <i class="fas fa-box"></i>
-                                <span>Inventaris Barang</span>
-                            </a>
-                        </li>
+                            <li class="menu-header">Menu Inventaris</li>
+                            <li>
+                                <a class="nav-link" href="{{ url('admin/item') }}">
+                                    <i class="fas fa-box"></i>
+                                    <span>Inventaris Barang</span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a class="nav-link" href="{{ url('admin/transaction') }}">
-                                <i class="fas fa-book"></i>
-                                <span>Peminjaman Barang</span>
-                            </a>
-                        </li>
+                            <li>
+                                <a class="nav-link" href="{{ url('admin/transaction') }}">
+                                    <i class="fas fa-book"></i>
+                                    <span>Peminjaman Barang</span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a class="nav-link" href="{{ url('admin/request') }}">
-                                <i class="fas fa-comment"></i>
-                                <span>Permintaan Barang</span>
-                            </a>
-                        </li>
+                            <li>
+                                <a class="nav-link" href="{{ url('admin/request') }}">
+                                    <i class="fas fa-comment"></i>
+                                    <span>Permintaan Barang</span>
+                                </a>
+                            </li>
                         @elseif(auth()->user()->role == 'user')
-                        <li class="menu-header">Menu Peminjaman</li>
-                        <li class="active">
-                            <a class="nav-link" href="{{ url('item') }}">
-                                <i class="fas fa-box"></i>
-                                <span>Daftar Inventaris</span>
-                            </a>
-                        </li>
+                            <li class="menu-header">Menu Peminjaman</li>
+                            <li class="active">
+                                <a class="nav-link" href="{{ url('item') }}">
+                                    <i class="fas fa-box"></i>
+                                    <span>Daftar Inventaris</span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a class="nav-link" href="{{ url('transaction') }}">
-                                <i class="fas fa-book"></i>
-                                <span>Halaman Peminjaman</span>
-                            </a>
-                        </li>
+                            <li>
+                                <a class="nav-link" href="{{ url('transaction') }}">
+                                    <i class="fas fa-book"></i>
+                                    <span>Halaman Peminjaman</span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a class="nav-link" href="{{ url('request') }}">
-                                <i class="fas fa-comment"></i>
-                                <span>Permintaan Barang</span>
-                            </a>
-                        </li>
+                            <li>
+                                <a class="nav-link" href="{{ url('request') }}">
+                                    <i class="fas fa-comment"></i>
+                                    <span>Permintaan Barang</span>
+                                </a>
+                            </li>
                         @else
-                        <li class="menu-header">Menu Peminjaman</li>
-                        <li class="active">
-                            <a class="nav-link" href="{{ url('/') }}">
-                                <i class="fas fa-box"></i>
-                                <span>Daftar Inventaris</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="{{ url('transaction') }}">
-                                <i class="fas fa-book"></i>
-                                <span>Halaman Peminjaman</span>
-                            </a>
-                        </li>
+                            <li class="menu-header">Menu Peminjaman</li>
+                            <li class="active">
+                                <a class="nav-link" href="{{ url('/') }}">
+                                    <i class="fas fa-box"></i>
+                                    <span>Daftar Inventaris</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{{ url('transaction') }}">
+                                    <i class="fas fa-book"></i>
+                                    <span>Halaman Peminjaman</span>
+                                </a>
+                            </li>
                         @endif
                     </ul>
                 </aside>
