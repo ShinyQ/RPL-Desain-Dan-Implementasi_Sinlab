@@ -16,7 +16,7 @@ class RequestItemController extends Controller
     {
         $items = RequestItem::latest()->paginate(5);
         $title = "Halaman Request Item";
-        return view('item.index', compact('title', 'items'));
+        return view('request.index', compact('title', 'items'));
         //
     }
 
@@ -39,7 +39,6 @@ class RequestItemController extends Controller
      */
     public function store(Request $request)
     {
-        
     }
 
     /**
@@ -50,7 +49,7 @@ class RequestItemController extends Controller
      */
     public function show(RequestItem $requestItem)
     {
-        //
+        return Response()->json($requestItem);
     }
 
     /**
@@ -61,7 +60,7 @@ class RequestItemController extends Controller
      */
     public function edit(RequestItem $requestItem)
     {
-        //
+        return Response()->json($requestItem);
     }
 
     /**
@@ -73,7 +72,16 @@ class RequestItemController extends Controller
      */
     public function update(Request $request, RequestItem $requestItem)
     {
-        //
+        if ($requestItem->status == "Menunggu Persetujuan") {
+            $requestItem->feedback = $request->feedback;
+        }
+
+        $requestItem->status = $request->status;
+        $requestItem->save();
+
+        return Response()->json([
+            'message' => 'OK',
+        ]);
     }
 
     /**
