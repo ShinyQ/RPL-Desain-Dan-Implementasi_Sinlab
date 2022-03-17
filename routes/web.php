@@ -24,6 +24,7 @@ Route::get('auth/google/callback', [GoogleProviderController::class, 'handleCall
 Route::group(['prefix' => 'user'], function () {
     Route::get('/login', [UserController::class, 'view_login']);
     Route::get('/logout', [UserController::class, 'logout']);
+    Route::get('/profile', [UserController::class, 'profile']);
 });
 
 Route::group(['middleware' => 'LoggedIn'], function () {
