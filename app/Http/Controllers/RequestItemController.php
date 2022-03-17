@@ -17,7 +17,6 @@ class RequestItemController extends Controller
         $items = RequestItem::latest()->paginate(5);
         $title = "Halaman Request Item";
         return view('request.index', compact('title', 'items'));
-        //
     }
 
     /**
