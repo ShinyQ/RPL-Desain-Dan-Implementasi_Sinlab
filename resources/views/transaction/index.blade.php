@@ -6,11 +6,6 @@
 
 <div class="section-body">
     <div class="card">
-        <!-- @if (auth()->user()->role == 'super_user')
-        <div class="card-header">
-            <a href="{{ url('transaction/create') }}" class="btn btn-primary">+ Lihat Request Peminjaman</a>
-        </div>
-        @endif -->
         <div class="card-body">
             <div class="table-responsive">
                 <table id="dataTable" class="table-bordered table-md table">
