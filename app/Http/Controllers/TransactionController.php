@@ -15,6 +15,9 @@ class TransactionController extends Controller
     public function index()
     {
         //
+        $items = Transaction::latest()->paginate(4);
+        $title = "Halaman Transaction";
+        return view('transaction.index', compact('title', 'items'));
     }
 
     /**
