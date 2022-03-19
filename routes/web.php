@@ -40,4 +40,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'superuser'], function () {
     Route::resource('item', ItemController::class);
     Route::resource('request', RequestItemController::class);
     Route::resource('transaction', TransactionController::class);
+    Route::resource('user', UserController::class);
 });
