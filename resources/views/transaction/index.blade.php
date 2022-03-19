@@ -1,31 +1,33 @@
 @extends('layout.main')
 @section('content')
-<div class="section-header">
-    <h1>{{ $title }}</h1>
-</div>
+    <div class="section-header">
+        <div class="aligns-items-center d-inline-block">
+            <h1>{{ $title }}</h1>
+        </div>
+    </div>
 
-<div class="section-body">
-    <div class="card">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table id="dataTable" class="table-bordered table-md table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Status</th>
-                            <th>Deadline</th>
-                            <th>Feedback</th>
-                            @if ( auth()->user()->role == 'super_user')
-                            <th>Tanggal Dibuat</th>
-                            <th>Action</th>
-                            @endif
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($items as $key => $item)
-                        <tr>
-                            <td>{{ $key + 1 }}</td>
-                            <td>
+    <div class="section-body">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="dataTable" class="table-bordered table-md table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Status</th>
+                                <th>Deadline</th>
+                                <th>Feedback</th>
+                                @if (auth()->user()->role == 'super_user')
+                                    <th>Tanggal Dibuat</th>
+                                    <th>Action</th>
+                                @endif
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($items as $key => $item)
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>
                                         @if ($item->status == 'Diterima')
                                             <div class="badge badge-success">{{ $item->status }}</div>
                                         @elseif ($item->status == 'Ditolak')
@@ -33,30 +35,27 @@
                                         @else
                                             <div class="badge badge-warning">{{ $item->status }}</div>
                                         @endif
-                            </td>
-                            <td>{{ $item->deadline }}</td>
-                            <td>{{ $item->feedback }}</td>
-                            @if ( auth()->user()->role == 'super_user')
-                            <td>{{ $item->created_at }}</td>
-                            <td>
-                                @if ( $item->status == 'Menunggu Persetujuan')
-                                <button class="btn btn-primary btn-process" data-id="{{ $item->id }}">Proses</button>
-                                @else
-                                Selesai
-                                @endif
-                            </td>
-                            
-                            @endif
-                        </tr>
-                        @empty
-                        Data Masih Kosong
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-        </div> `
+                                    </td>
+                                    <td>{{ $item->deadline }}</td>
+                                    <td>{{ $item->feedback }}</td>
+                                    @if (auth()->user()->role == 'super_user')
+                                        <td>{{ $item->created_at }}</td>
+                                        <td>
+                                            @if ($item->status == 'Menunggu Persetujuan')
+                                                <button class="btn btn-primary btn-process" data-id="{{ $item->id }}">Proses</button>
+                                            @else
+                                                Selesai
+                                            @endif
+                                        </td>
+                                    @endif
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div> `
+        </div>
     </div>
-</div>
 @endsection
 
 <div class="modal fade show" tabindex="-1" role="dialog" id="modalprocess">

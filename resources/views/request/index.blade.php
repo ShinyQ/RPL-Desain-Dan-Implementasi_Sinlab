@@ -1,7 +1,9 @@
 @extends('layout.main')
 @section('content')
     <div class="section-header">
-        <h1>{{ $title }}</h1>
+        <div class="aligns-items-center d-inline-block">
+            <h1>{{ $title }}</h1>
+        </div>
     </div>
 
     <div class="section-body">
@@ -21,7 +23,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($items as $key => $item)
+                            @foreach ($items as $key => $item)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $item->name }}</td>
@@ -45,9 +47,7 @@
                                         @endif
                                     </td>
                                 </tr>
-                            @empty
-                                Data Masih Kosong
-                            @endforelse
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

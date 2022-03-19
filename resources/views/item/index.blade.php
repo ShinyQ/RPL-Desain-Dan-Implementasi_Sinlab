@@ -1,20 +1,22 @@
 @extends('layout.main')
 @section('content')
     <div class="section-header">
-        <h1>{{ $title }}</h1>
+        <div class="aligns-items-center d-inline-block">
+            <h1>{{ $title }}</h1>
+        </div>
     </div>
 
     <div class="section-body">
         <div class="card">
             @if (auth()->user()->role == 'super_user')
                 <div class="card-header d-flex justify-content-between">
-                    <a href="{{ url('request/create') }}" class="btn btn-primary">+ Tambah Barang Inventaris</a>
-                    {{-- #TODO add export button here --}}
+                    <a href="{{ url('item/create') }}" class="btn btn-icon icon-left btn-primary"><i class="fa fa-plus"></i> Tambah Barang Inventaris</a>
+                    {{-- #TODO p export button here --}}
                 </div>
             @endif
             @if (auth()->user()->role == 'user')
                 <div class="card-header d-flex justify-content-between">
-                    <button class="btn btn-primary" id="btnRequest">+ Ajukan Inventaris</button>
+                    <button class="btn btn-icon icon-left btn-primary" id="btnRequest"><i class="fa fa-plus"></i> Ajukan Inventaris</button>
                 </div>
             @endif
             <div class="card-body">

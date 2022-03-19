@@ -1,7 +1,12 @@
 @extends('layout.main')
 @section('content')
     <div class="section-header">
-        <h1>{{ $title }}</h1>
+        <div class="aligns-items-center d-inline-block">
+            <a href="{{ url('/') }}">
+                <i class="h5 fa fa-arrow-left"></i>
+            </a>
+            <h1>{{ $title }}</h1>
+        </div>
     </div>
 
     <div class="section-body">
@@ -32,20 +37,23 @@
                             <h4>Edit Profile</h4>
                         </div>
                         <div class="card-body">
-                            <div class="row">
-                                <div class="form-group col-md-6 col-12">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
                                     <label>Phone</label>
                                     <input type="text" placeholder="081xxx" class="form-control" value="{{ Auth::user()->phone }}" required="">
                                     <div class="invalid-feedback">
                                         Please fill the phone
                                     </div>
                                 </div>
-                                <div style="text-align: left">
+                                <div class="form-group col-md-6">
                                     <label>Upload KTM</label>
-                                    <br>
-                                    <img src="" width="150px" id="preview" style="margin-bottom: 2%">
-                                    <br>
-                                    <input name="photo" type="file" id="filetag">
+                                    <div class="input-group d-flex justify-content-center">
+
+                                        <div id="image-preview" class="image-preview">
+                                            <label for="image-upload" id="image-label">Choose File</label>
+                                            <input type="file" accept="image/*" name="photo" id="image-upload" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -57,27 +65,20 @@
             </div>
         </div>
     </div>
-
-    <script>
-        var fileTag = document.getElementById("filetag"),
-            preview = document.getElementById("preview");
-
-        fileTag.addEventListener("change", function() {
-            changeImage(this);
-        });
-
-        function changeImage(input) {
-            var reader;
-
-            if (input.files && input.files[0]) {
-                reader = new FileReader();
-
-                reader.onload = function(e) {
-                    preview.setAttribute('src', e.target.result);
-                }
-
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-    </script>
 @endsection
+
+@push('scripts')
+    <script>
+        $("select").selectric();
+        $.uploadPreview({
+            input_field: "#image-upload", // Default: .image-upload
+            preview_box: "#image-preview", // Default: .image-preview
+            label_field: "#image-label", // Default: .image-label
+            label_default: "Choose File", // Default: Choose File
+            label_selected: "Change File", // Default: Change File
+            no_label: false, // Default: false
+            success_callback: null // Default: null
+        });
+        $(".inputtags").tagsinput('items');
+    </script>
+@endpush
