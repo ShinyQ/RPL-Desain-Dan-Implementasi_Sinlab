@@ -15,6 +15,9 @@
 <script src="{{ asset('assets/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('assets/js/dataTables.select.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.selectric.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.uploadPreview.min.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap-tagsinput.min.js') }}"></script>
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('assets/js/page/components-table.js') }}"></script>
