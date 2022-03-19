@@ -21,12 +21,13 @@ use App\Http\Controllers\TransactionController;
 Route::get('auth/callback', [GoogleProviderController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleProviderController::class, 'handleCallback']);
 
-Route::group(['prefix' => 'user'], function (){
+Route::group(['prefix' => 'user'], function () {
     Route::get('/login', [UserController::class, 'view_login']);
     Route::get('/logout', [UserController::class, 'logout']);
+    Route::get('/profile', [UserController::class, 'profile']);
 });
 
-Route::group(['middleware' => 'LoggedIn'], function (){
+Route::group(['middleware' => 'LoggedIn'], function () {
     Route::get('/', [DashboardController::class, 'index']);
     Route::resource('item', ItemController::class);
     Route::resource('transaction', TransactionController::class)->only(['index', 'store']);
@@ -35,9 +36,8 @@ Route::group(['middleware' => 'LoggedIn'], function (){
 Route::resource('/request', RequestItemController::class)->only(['index', 'store', 'create']);
 
 
-Route::group(['prefix' => 'admin', 'middleware' => 'superuser'], function (){
+Route::group(['prefix' => 'admin', 'middleware' => 'superuser'], function () {
     Route::resource('item', ItemController::class);
     Route::resource('request', RequestItemController::class);
     Route::resource('transaction', TransactionController::class);
 });
-

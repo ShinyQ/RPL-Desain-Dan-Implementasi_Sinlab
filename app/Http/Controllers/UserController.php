@@ -15,8 +15,9 @@ class UserController extends Controller
     }
 
     public function profile(){
+        $title = "Profile";
         $user = User::findOrFail(request()->session()->get('user')->id);
-        return view('profile', compact('user'));
+        return view('user.profile', compact('user', 'title'));
     }
 
     public function logout(){
