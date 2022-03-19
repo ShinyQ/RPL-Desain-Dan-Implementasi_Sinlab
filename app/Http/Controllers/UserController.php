@@ -14,6 +14,11 @@ class UserController extends Controller
         return view('login');
     }
 
+    public function index(){
+        $title = "Daftar Pengguna";
+        $users = User::latest()->paginate(4);
+        return view('user.index', compact('users', 'title'));
+    }
     public function profile(){
         $title = "Profile";
         $user = User::findOrFail(request()->session()->get('user')->id);

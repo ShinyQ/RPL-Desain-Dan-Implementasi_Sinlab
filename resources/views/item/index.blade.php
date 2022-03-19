@@ -49,9 +49,10 @@
                         @empty
                             Data Masih Kosong
                         @endforelse
-                        </tbody></table>
+                        </tbody>
+                    </table>
                 </div>
-            </div>  `
+            </div>
         </div>
     </div>
 @endsection
