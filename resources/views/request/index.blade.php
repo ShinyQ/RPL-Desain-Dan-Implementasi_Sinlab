@@ -67,10 +67,18 @@
             </div>
             <div class="modal-body">
                 <form id="formReview" data-id="">
-                    <div class="form-group">
-                        <label>Nama Barang</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="namaBarang" readonly placeholder="nama barang">
+                    <div class="form-row">
+                        <div class="form-group col-md-2">
+                            <label>Qty</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="qtyBarang" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-10">
+                            <label>Nama Barang</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="namaBarang" readonly placeholder="nama barang">
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -117,6 +125,7 @@
                     type: 'GET',
                     success: function(data) {
                         $('#modalReviewTitle').html(`Detail ${data.name}`)
+                        $('#qtyBarang').val(data.qty)
                         $('#namaBarang').val(data.name);
                         $('#deskripsiBarang').val(data.description);
                         $('#statusBarang').val(data.status);
@@ -146,6 +155,7 @@
                     type: 'GET',
                     success: function(data) {
                         $('#modalReviewTitle').html(`Review ${data.name}`)
+                        $('#qtyBarang').val(data.qty)
                         $('#namaBarang').val(data.name);
                         $('#deskripsiBarang').val(data.description);
                         $('#statusBarang').val(data.status);

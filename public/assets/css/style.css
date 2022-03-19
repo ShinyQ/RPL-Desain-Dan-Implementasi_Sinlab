@@ -1315,8 +1315,8 @@ h6 .badge {
   color: #fff !important; }
 
 .btn-primary, .btn-primary.disabled {
-  background-color: #9f1521;
-  border-color: #9f1521; }
+  background-color: #9f1521 !important;
+  border-color: #9f1521 !important; }
   .btn-primary:focus, .btn-primary.disabled:focus {
     background-color: #800e18 !important; }
     .btn-primary:focus:active, .btn-primary.disabled:focus:active {
