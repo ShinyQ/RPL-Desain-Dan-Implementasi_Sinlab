@@ -62,14 +62,14 @@
                     <ul class="sidebar-menu">
                         @if (auth()->user()->role == 'super_user')
                             <li class="menu-header">Menu Utama</li>
-                            <li class="active">
+                            <li  class="{{ Request::is('/') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('/') }}">
                                     <i class="fa fa-chart-bar"></i>
                                     <span>Halaman Dashboard</span>
                                 </a>
                             </li>
 
-                            <li>
+                            <li class="{{ Request::is('admin/user') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('admin/user') }}">
                                     <i class="fa fa-users"></i>
                                     <span>Daftar Pengguna</span>
@@ -77,21 +77,21 @@
                             </li>
 
                             <li class="menu-header">Menu Inventaris</li>
-                            <li>
+                            <li class={{ Request::is('admin/item') ? 'active' : '' }}>
                                 <a class="nav-link" href="{{ url('admin/item') }}">
                                     <i class="fa fa-box"></i>
                                     <span>Inventaris Barang</span>
                                 </a>
                             </li>
 
-                            <li>
+                            <li class={{ Request::is('admin/transaction') ? 'active' : '' }}>
                                 <a class="nav-link" href="{{ url('admin/transaction') }}">
                                     <i class="fa fa-book"></i>
                                     <span>Peminjaman Barang</span>
                                 </a>
                             </li>
 
-                            <li>
+                            <li class={{ Request::is('admin/request') ? 'active' : '' }}>
                                 <a class="nav-link" href="{{ url('admin/request') }}">
                                     <i class="fa fa-comment"></i>
                                     <span>Permintaan Barang</span>
@@ -99,21 +99,21 @@
                             </li>
                         @elseif(auth()->user()->role == 'user')
                             <li class="menu-header">Menu Peminjaman</li>
-                            <li class="active">
+                            <li class={{ Request::is('item') ? 'active' : '' }}>
                                 <a class="nav-link" href="{{ url('item') }}">
                                     <i class="fa fa-box"></i>
                                     <span>Daftar Inventaris</span>
                                 </a>
                             </li>
 
-                            <li>
+                            <li class={{ Request::is('transaction') ? 'active' : '' }}>
                                 <a class="nav-link" href="{{ url('transaction') }}">
                                     <i class="fa fa-book"></i>
                                     <span>Halaman Peminjaman</span>
                                 </a>
                             </li>
 
-                            <li>
+                            <li class={{ Request::is('request') ? 'active' : '' }}>
                                 <a class="nav-link" href="{{ url('request') }}">
                                     <i class="fa fa-comment"></i>
                                     <span>Permintaan Barang</span>
@@ -121,13 +121,13 @@
                             </li>
                         @else
                             <li class="menu-header">Menu Peminjaman</li>
-                            <li class="active">
+                            <li class={{ Request::is('/') ? 'active' : '' }}>
                                 <a class="nav-link" href="{{ url('/') }}">
                                     <i class="fa fa-box"></i>
                                     <span>Daftar Inventaris</span>
                                 </a>
                             </li>
-                            <li>
+                            <li class={{ Request::is('transaction') ? 'active' : '' }}>
                                 <a class="nav-link" href="{{ url('transaction') }}">
                                     <i class="fa fa-book"></i>
                                     <span>Halaman Peminjaman</span>

@@ -16,12 +16,14 @@ class UserController extends Controller
 
     public function index(){
         $title = "Daftar Pengguna";
-        $users = User::latest()->paginate(4);
+        $users = User::latest()->paginate();
+
         return view('user.index', compact('users', 'title'));
     }
     public function profile(){
         $title = "Profile";
         $user = User::findOrFail(request()->session()->get('user')->id);
+
         return view('user.profile', compact('user', 'title'));
     }
 

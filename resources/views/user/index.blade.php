@@ -24,7 +24,13 @@
                         @forelse($users as $key => $user)
                         <tr>
                             <td>{{ $key+1 }}</td>
-                            <td><img width="100" src="{{ $user->photo }}" alt=""></td>
+                            <td>
+                                @if(!$user->photo)
+                                    <img width="100" src="{{ asset('assets/images/telu.jpg') }}" alt="">
+                                @else
+                                    <img width="100" src="{{ $user->photo }}" alt="">
+                                @endif
+                            </td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->ktm }}</td>
