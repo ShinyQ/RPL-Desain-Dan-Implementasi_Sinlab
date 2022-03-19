@@ -36,7 +36,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($items as $key => $item)
+                            @forelse($items as $key => $item)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td><img width="100" src="{{ $item->photo }}" alt=""></td>
@@ -54,7 +54,9 @@
                                         </td>
                                     @endif
                                 </tr>
-                            @endforeach
+                            @empty
+                                Data Masih Kosong
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
