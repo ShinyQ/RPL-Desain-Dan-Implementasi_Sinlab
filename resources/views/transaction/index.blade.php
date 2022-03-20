@@ -41,11 +41,12 @@
                                     @if (auth()->user()->role == 'super_user')
                                         <td>{{ $item->created_at }}</td>
                                         <td>
-                                            @if ($item->status == 'Menunggu Persetujuan')
-                                                <button class="btn btn-primary btn-process" data-id="{{ $item->id }}">Proses</button>
-                                            @else
-                                                Selesai
-                                            @endif
+                                            <div class="d-flex justify-content-center">
+                                                <a href="{{ URL('transaction/' . $item->id) }}" class="btn btn-primary btn-detail mr-1" data-id="{{ $item->id }}">Detail</a>
+                                                @if ($item->status == 'Menunggu Persetujuan')
+                                                    <button class="btn btn-primary btn-process" data-id="{{ $item->id }}">Proses</button>
+                                                @endif
+                                            </div>
                                         </td>
                                     @endif
                                 </tr>
@@ -53,7 +54,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div> `
+            </div>
         </div>
     </div>
 @endsection

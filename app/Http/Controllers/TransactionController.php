@@ -27,7 +27,8 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        //
+        $title = "Ajukan Peminjaman";
+        return view('transaction.create', compact('title'));
     }
 
     /**
@@ -49,7 +50,8 @@ class TransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        //
+        $title = "Peminjaman";
+        return view('transaction.show', compact('title'));
     }
 
     /**

@@ -11,12 +11,13 @@
             @if (auth()->user()->role == 'super_user')
                 <div class="card-header d-flex justify-content-between">
                     <a href="{{ url('item/create') }}" class="btn btn-icon icon-left btn-primary"><i class="fa fa-plus"></i> Tambah Barang Inventaris</a>
-                    {{-- #TODO p export button here --}}
                 </div>
-            @endif
-            @if (auth()->user()->role == 'user')
+            @else
                 <div class="card-header d-flex justify-content-between">
-                    <button class="btn btn-icon icon-left btn-primary" id="btnRequest"><i class="fa fa-plus"></i> Ajukan Inventaris</button>
+                    <a href="{{ url('transaction/create') }}" class="btn btn-icon icon-left btn-primary"><i class="fa fa-plus"></i> Pinjam Barang</a>
+                    @if (auth()->user()->role == 'user')
+                        <button class="btn btn-icon icon-left btn-primary" id="btnRequest"><i class="fa fa-comment"></i> Ajukan Inventaris</button>
+                    @endif
                 </div>
             @endif
             <div class="card-body">
@@ -24,6 +25,14 @@
                     <table id="dataTable" class="table-bordered table-md table">
                         <thead>
                             <tr>
+                                @if (auth()->user()->role != 'super_user')
+                                    <th class="text-center">
+                                        <div class="custom-checkbox custom-control">
+                                            <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
+                                            <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                                        </div>
+                                    </th>
+                                @endif
                                 <th>#</th>
                                 <th>Foto</th>
                                 <th>Nama Barang</th>
@@ -31,13 +40,21 @@
                                 <th>Jumlah</th>
                                 @if (auth()->user()->role == 'super_user')
                                     <th>Tanggal Dibuat</th>
+                                    <th>Action</th>
                                 @endif
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($items as $key => $item)
                                 <tr>
+                                    @if (auth()->user()->role != 'super_user')
+                                        <td>
+                                            <div class="custom-checkbox custom-control">
+                                                <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-{{ $key + 1 }}">
+                                                <label for="checkbox-{{ $key + 1 }}" class="custom-control-label">&nbsp;</label>
+                                            </div>
+                                        </td>
+                                    @endif
                                     <td>{{ $key + 1 }}</td>
                                     <td><img width="100" src="{{ $item->photo }}" alt=""></td>
                                     <td>{{ $item->name }}</td>
@@ -47,10 +64,6 @@
                                         <td>{{ $item->created_at }}</td>
                                         <td>
                                             <a href="#" class="btn btn-primary">Edit</a>
-                                        </td>
-                                    @else
-                                        <td>
-                                            <a href="#" class="btn btn-primary">Pinjam</a>
                                         </td>
                                     @endif
                                 </tr>
