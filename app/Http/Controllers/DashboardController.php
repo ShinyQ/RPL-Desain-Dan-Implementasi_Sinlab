@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
+use Carbon\Carbon;
+
 class DashboardController extends Controller
 {
     public function index(){
@@ -10,6 +13,11 @@ class DashboardController extends Controller
         }
 
         $title = "Halaman Dashboard";
-        return view('index', compact('title'));
+        $deadline = Transaction::where('status', 'Diterima')
+            ->whereBetween('deadline', [Carbon::now(), Carbon::now()->addDays(5)])
+            ->oldest()
+            ->get();
+
+        return view('index', compact('title', 'deadline'));
     }
 }

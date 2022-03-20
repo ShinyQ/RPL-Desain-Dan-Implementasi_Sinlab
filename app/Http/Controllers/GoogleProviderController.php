@@ -54,6 +54,8 @@ class GoogleProviderController extends Controller
                     'email_verified_at' => Carbon::now(),
                 ]);
             }
+        } else {
+            $user->update(['photo' => $providerUser->avatar]);
         }
 
         return $user;

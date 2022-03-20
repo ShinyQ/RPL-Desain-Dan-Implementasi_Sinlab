@@ -19,20 +19,44 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="card">
+                    <div class="card-header"><h4 style="font-size: 18px">Pengembalian Barang Terdekat</h4></div>
                     <div class="card-body">
-                    card
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nama</th>
+                                    <th scope="col">Nomor handphone</th>
+                                    <th scope="col">Tangal Pengembalian</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($deadline as $key => $val)
+                                <tr>
+                                    <th scope="row">{{ $key + 1 }}</th>
+                                    <td>{{ $val->user->name }}</td>
+                                    <td>{{ $val->user->phone }}</td>
+                                    <td>{{ $val->deadline }}</td>
+                                    <td>
+                                        <a class="btn btn-outline-primary" href="transaction/{{ $val->id }}">
+                                            Detail
+                                        </a>
+                                        &nbsp;
+                                        <a class="btn btn-primary" href="transaction/{{ $val->id }}">
+                                            Konfirmasi Pengembalian
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        card
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 
@@ -79,7 +103,7 @@
         const data1 = [trace2];
 
         const layout1 = {
-            title: 'Grafik Pinjam Dan Pengembalian Inventaris',
+            title: 'Grafik Barang Dipinjam Terbanyak',
             xaxis: {
                 title: 'Tanggal'
             },

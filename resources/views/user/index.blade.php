@@ -18,6 +18,7 @@
                                 <th>Email</th>
                                 <th>KTM</th>
                                 <th>Phone</th>
+                                <th>Tanggal Dibuat</th>
                                 <th>Role</th>
                             </tr>
                         </thead>
@@ -25,15 +26,34 @@
                             @foreach ($users as $key => $user)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td><img width="100" src="{{ $user->photo }}" alt=""></td>
+                                    <td>
+                                        @if(!$user->photo)
+                                            <img width="100" src="{{ asset('assets/images/telu.jpg') }}" alt="Photo Profile">
+                                        @else
+                                            <img width="100" src="{{ $user->photo }}" alt="Photo {{ $user->name }}">
+                                        @endif
+                                    </td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td>{{ $user->ktm }}</td>
-                                    <td>{{ $user->phone }}</td>
+                                    <td>
+                                        @if($user->ktm)
+                                            {{ $user->ktm }}
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($user->phone)
+                                            {{ $user->phone }}
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
+                                    <td>{{ $user->created_at }}</td>
                                     <td>
                                         <div class="dropdown d-inline mr-2">
                                             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownRoleButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                {{ Str::replace('_', ' ', $user->role) }}
+                                                {{ ucfirst(Str::replace('_', ' ', $user->role)) }}
                                             </button>
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" href="#">Guest</a>

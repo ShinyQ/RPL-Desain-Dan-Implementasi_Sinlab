@@ -43,7 +43,7 @@
                                         @if (auth()->user()->role == 'super_user' && $item->status == 'Menunggu Persetujuan')
                                             <button class="btn btn-primary btn-review" data-id="{{ $item->id }}">Review</button>
                                         @else
-                                            <button class="btn btn-primary btn-detail" data-id="{{ $item->id }}">Detail</a>
+                                            <button class="btn btn-outline-primary btn-detail" data-id="{{ $item->id }}">Detail</a>
                                         @endif
                                     </td>
                                 </tr>

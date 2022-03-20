@@ -19,7 +19,7 @@ class ItemFactory extends Factory
         return [
             'name' => $this->faker->colorName,
             'description' => $this->faker->sentence,
-            'photo' => $this->faker->imageUrl,
+            'photo' => 'https://picsum.photos/300/300?nocache='. microtime(),
             'qty' => rand(1,20),
         ];
     }
