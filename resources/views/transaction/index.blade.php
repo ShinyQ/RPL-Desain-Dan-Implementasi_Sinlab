@@ -14,9 +14,13 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Nama Peminjam</th>
+                                <th>nama barang</th>
                                 <th>Status</th>
                                 <th>Deadline</th>
                                 <th>Feedback</th>
+                                <th>qty</th>
+                                <th>tanggal pinjam</th>
                                 @if (auth()->user()->role == 'super_user')
                                     <th>Tanggal Dibuat</th>
                                     <th>Action</th>
@@ -27,6 +31,10 @@
                             @foreach ($items as $key => $item)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
+                                    <!-- nama peminjam -->
+                                    <td>Michael Warning</td>
+                                    <!-- nama barang -->
+                                    <td>Router Foresty</td>
                                     <td>
                                         @if ($item->status == 'Diterima')
                                             <div class="badge badge-success">{{ $item->status }}</div>
@@ -38,6 +46,8 @@
                                     </td>
                                     <td>{{ $item->deadline }}</td>
                                     <td>{{ $item->feedback }}</td>
+                                    <td>2</td>
+                                    <td>21-April-2022</td>
                                     @if (auth()->user()->role == 'super_user')
                                         <td>{{ $item->created_at }}</td>
                                         <td>
@@ -69,6 +79,7 @@
             </div>
             <div class="modal-body">
                 <form id="formprocess" data-id="">
+                    
                     <div class="form-group">
                         <label>Status</label>
                         <select class="form-control" id="statusBarang" disabled="true">
