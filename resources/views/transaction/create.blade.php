@@ -4,7 +4,7 @@
         <div class="aligns-items-center d-inline-block">
             <a href="{{ url('item') }}">
                 <i class="h5 fa fa-arrow-left"></i>
-            </a>
+            </a> &nbsp; &nbsp;
             <h1>{{ $title }}</h1>
         </div>
     </div>

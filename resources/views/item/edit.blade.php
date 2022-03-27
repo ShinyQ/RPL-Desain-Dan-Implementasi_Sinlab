@@ -19,8 +19,27 @@
         </div>
     @endif
 
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ $message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
+    @if ($message = Session::get('failed'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ $message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
     <div class="section-body">
-        <form action="{{ url('admin/item') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ url('admin/item/'. $item->id) }}" method="POST" enctype="multipart/form-data">
+            @method('PUT')
             @csrf
             <div class="row">
                 <div class="col-md-6">
@@ -28,15 +47,15 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Nama Barang</label>
-                                <input type="text" class="form-control" name="name">
+                                <input type="text" class="form-control" name="name" value="{{ $item->name }}">
                             </div>
                             <div class="form-group">
                                 <label>Deskripsi Barang</label>
-                                <textarea class="form-control h-25" row="3" name="description"></textarea>
+                                <textarea class="form-control h-25" row="3" name="description">{{ $item->description }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label>Jumlah Barang</label>
-                                <input type="number" min="1" class="form-control" name="qty">
+                                <input type="number" min="1" class="form-control" name="qty" value="{{ $item->qty }}">
                             </div>
                             <button class="btn btn-primary float-right">Tambah Data</button>
                         </div>

@@ -5,6 +5,25 @@
             <h1>{{ $title }}</h1>
         </div>
     </div>
+
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ $message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
+    @if ($message = Session::get('failed'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ $message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
     <div class="section-body">
         <div class="card">
             <div class="card-body">
@@ -56,9 +75,9 @@
                                                 {{ ucfirst(Str::replace('_', ' ', $user->role)) }}
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="#">Guest</a>
-                                                <a class="dropdown-item" href="#">User</a>
-                                                <a class="dropdown-item" href="#">Super User</a>
+                                                <a class="dropdown-item" href="{{ url('admin/update_role/'.$user->id).'/guest' }}">Guest</a>
+                                                <a class="dropdown-item" href="{{ url('admin/update_role/'.$user->id).'/user' }}">User</a>
+                                                <a class="dropdown-item" href="{{ url('admin/update_role/'.$user->id).'/super_user' }}">Super User</a>
                                             </div>
                                         </div>
                                     </td>

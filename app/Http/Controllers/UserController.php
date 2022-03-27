@@ -27,6 +27,18 @@ class UserController extends Controller
         return view('user.profile', compact('user', 'title'));
     }
 
+    public function update_role($id, $role){
+        $user = User::where('id', $id)->update(['role'=> $role]);
+
+        if($user){
+            session()->flash('success', 'Sukses Mengupdate Role User');
+        } else {
+            session()->flash('failed', 'Gagal Mengupdate Role User');
+        }
+
+        Return redirect()->back();
+    }
+
     public function logout(){
         request()->session()->forget('user');
         return redirect('user/login')->with('success', 'Sukses Melakukan Logout');

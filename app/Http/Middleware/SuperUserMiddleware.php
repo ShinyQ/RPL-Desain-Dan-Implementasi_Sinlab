@@ -16,7 +16,7 @@ class SuperUserMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(request()->session()->get('user')->role == 'super_user'){
+        if(session()->get('user')->role == 'super_user'){
             return $next($request);
         }
 

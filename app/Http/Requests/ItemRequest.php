@@ -13,7 +13,7 @@ class ItemRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,19 +23,19 @@ class ItemRequest extends FormRequest
      */
     public function rules()
     {
-        if($this->isMethod('post')){
+        if($this->isMethod('POST')){
             return [
-                'name' =>['required'],
-                'qty'=>['required'],
-                'photo'=>['required'],
-                'description'=>['required'],
+                'name'        => ['required'],
+                'qty'         => ['required'],
+                'photo'       => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+                'description' => ['required'],
             ];
         }else {
             return [
-                'name' =>['sttring'],
-                'qty'=>[],
-                'photo'=>[],
-                'description'=>['string'],
+                'name'        =>['string'],
+                'qty'         => [],
+                'photo'       => [],
+                'description' => ['string'],
             ];
         }
     }

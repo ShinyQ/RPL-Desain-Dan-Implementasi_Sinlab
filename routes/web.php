@@ -21,6 +21,14 @@ use App\Http\Controllers\TransactionController;
 Route::get('auth/callback', [GoogleProviderController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleProviderController::class, 'handleCallback']);
 
+Route::group(['prefix' => 'admin', 'middleware' => 'superuser'], function () {
+    Route::resource('item', ItemController::class);
+    Route::resource('request', RequestItemController::class);
+    Route::resource('transaction', TransactionController::class);
+    Route::resource('user', UserController::class);
+    Route::get('update_role/{id}/{role}', [UserController::class, 'update_role']);
+});
+
 Route::group(['prefix' => 'user'], function () {
     Route::get('/login', [UserController::class, 'view_login']);
     Route::get('/logout', [UserController::class, 'logout']);
@@ -35,10 +43,3 @@ Route::group(['middleware' => 'LoggedIn'], function () {
 
 Route::resource('/request', RequestItemController::class)->only(['index', 'store', 'create']);
 
-
-Route::group(['prefix' => 'admin', 'middleware' => 'superuser'], function () {
-    Route::resource('item', ItemController::class);
-    Route::resource('request', RequestItemController::class);
-    Route::resource('transaction', TransactionController::class);
-    Route::resource('user', UserController::class);
-});

@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ItemRequest;
 use App\Models\Item;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
     public function index()
     {
         $title = "Halaman Barang Inventaris";
@@ -20,70 +16,63 @@ class ItemController extends Controller
         return view('item.index', compact('items', 'title'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
     public function create()
     {
         $title = "Halaman Tambah Barang";
         return view('item.create', compact('title'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(ItemRequest $request)
     {
-        //
+        $data = $request->validated();
+        $data['photo']?->move(public_path('images'), $data['photo']->getClientOriginalName());
+
+        Item::create($data);
+        return redirect('item');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Item  $item
-     * @return \Illuminate\Http\Response
-     */
     public function show(Item $item)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Item  $item
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Item $item)
+    public function edit($id)
     {
-        //
+        $title = "Halaman Edit Barang";
+        $item = Item::findOrFail($id);
+
+        return view('item.edit', compact('title', 'item'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Item  $item
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Item $item)
+    public function update(ItemRequest $request, $id)
     {
-        //
+        $data = $request->validated();
+
+        if(isset($data['photo'])){
+            $data['photo']->move(public_path('assets/images/item'), $data['photo']->getClientOriginalName());
+        }
+
+        $status = Item::where('id', $id)->update($data);
+
+        if($status){
+            session()->flash('success', 'Sukses Mengupdate Item');
+        } else {
+            session()->flash('failed', 'Gagal Mengupdate Item');
+        }
+
+        return redirect()->back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Item  $item
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Item $item)
+    public function destroy($id)
     {
-        //
+        $status = Item::findOrFail($id)->delete();
+
+        if($status){
+            session()->flash('success', 'Sukses Menghapus Item');
+        } else {
+            session()->flash('failed', 'Gagal Menghapus Item');
+        }
+
+        return redirect()->back();
     }
 }

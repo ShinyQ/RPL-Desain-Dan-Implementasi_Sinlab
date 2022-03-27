@@ -6,11 +6,29 @@
         </div>
     </div>
 
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ $message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
+    @if ($message = Session::get('failed'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ $message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
     <div class="section-body">
         <div class="card">
             @if (auth()->user()->role == 'super_user')
                 <div class="card-header d-flex justify-content-between">
-                    <a href="{{ url('item/create') }}" class="btn btn-icon icon-left btn-primary"><i class="fa fa-plus"></i> Tambah Barang Inventaris</a>
+                    <a href="{{ url('item/create') }}" class="btn btn-icon icon-left btn-primary"><i class="fa fa-plus"></i>&nbsp; Tambah Barang Inventaris</a>
                 </div>
             @else
                 <div class="card-header d-flex justify-content-between">
@@ -40,7 +58,7 @@
                                 <th>Jumlah</th>
                                 @if (auth()->user()->role == 'super_user')
                                     <th>Tanggal Dibuat</th>
-                                    <th>Action</th>
+                                    <th width="110px">Action</th>
                                 @endif
                             </tr>
                         </thead>
@@ -63,7 +81,14 @@
                                     @if (auth()->user()->role == 'super_user')
                                         <td>{{ $item->created_at }}</td>
                                         <td>
-                                            <a href="#" class="btn btn-primary">Edit</a>
+                                            <a href="{{ url('admin/item/'.$item->id.'/edit') }}" class="btn btn-primary">Edit</a>
+                                            <a
+                                                href="#" data-id="{{$item->id}}"
+                                                class="btn btn-outline-primary delete"
+                                                data-toggle="modal"
+                                                data-target="#deleteModal">Hapus
+                                            </a>
+
                                         </td>
                                     @endif
                                 </tr>
@@ -76,7 +101,42 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).on('click','.delete',function(){
+            let id = $(this).attr('data-id');
+            $('#id').val(id);
+            $('#deleteForm').attr('action', '/admin/item/' + id);
+        });
+    </script>
 @endsection
+
+<div class="modal modal-danger fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="Delete" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Hapus Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <hr width="90%">
+            <form id="deleteForm" method="post">
+                <div class="modal-body" style="padding-bottom: 5px">
+                        @csrf
+                        @method('DELETE')
+                        <input type="hidden" id="id" name="id">
+                        <p style="font-size: 16px" class="text-center">Apakah Anda Yakin Ingin Menghapus Item?</p>
+                </div>
+                <hr width="90%">
+                <div class="modal-footer" style="padding-top: 5px">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger">Ya</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 
 <div class="modal fade show" tabindex="-1" role="dialog" id="modalRequest">
