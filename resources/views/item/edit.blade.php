@@ -57,7 +57,7 @@
                                 <label>Jumlah Barang</label>
                                 <input type="number" min="1" class="form-control" name="qty" value="{{ $item->qty }}">
                             </div>
-                            <button class="btn btn-primary float-right">Tambah Data</button>
+                            <button class="btn btn-primary float-right">Edit Data</button>
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                             <h5>Upload Gambar Barang</h5>
                         </div>
                         <div class="card-body d-flex justify-content-center">
-                            <div id="image-preview" class="image-preview">
+                            <div id="image-preview" class="image-preview" style="background-image: url('{{ asset('assets/images/item/'. $item->photo) }}'); background-size: cover; background-position: center center;">
                                 <label for="image-upload" id="image-label">Choose File</label>
                                 <input type="file" accept="image/*" name="photo" id="image-upload" />
                             </div>

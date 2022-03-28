@@ -74,7 +74,11 @@
                                         </td>
                                     @endif
                                     <td>{{ $key + 1 }}</td>
-                                    <td><img width="100" src="{{ $item->photo }}" alt=""></td>
+                                    @if(substr("$item->photo",0,5) == "https")
+                                        <td><img width="100" src="{{ $item->photo }}" alt=""></td>
+                                    @else
+                                        <td><img width="100" src="{{ asset('assets/images/item/'. $item->photo) }}" alt=""></td>
+                                    @endif
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->description }}</td>
                                     <td>{{ $item->qty }}</td>
@@ -88,7 +92,6 @@
                                                 data-toggle="modal"
                                                 data-target="#deleteModal">Hapus
                                             </a>
-
                                         </td>
                                     @endif
                                 </tr>
@@ -105,7 +108,6 @@
     <script>
         $(document).on('click','.delete',function(){
             let id = $(this).attr('data-id');
-            $('#id').val(id);
             $('#deleteForm').attr('action', '/admin/item/' + id);
         });
     </script>
@@ -125,7 +127,6 @@
                 <div class="modal-body" style="padding-bottom: 5px">
                         @csrf
                         @method('DELETE')
-                        <input type="hidden" id="id" name="id">
                         <p style="font-size: 16px" class="text-center">Apakah Anda Yakin Ingin Menghapus Item?</p>
                 </div>
                 <hr width="90%">

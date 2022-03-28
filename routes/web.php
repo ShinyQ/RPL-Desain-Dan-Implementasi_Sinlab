@@ -25,7 +25,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'superuser'], function () {
     Route::resource('item', ItemController::class);
     Route::resource('request', RequestItemController::class);
     Route::resource('transaction', TransactionController::class);
-    Route::resource('user', UserController::class);
+    Route::get('user', [UserController::class, 'index']);
     Route::get('update_role/{id}/{role}', [UserController::class, 'update_role']);
 });
 
@@ -33,6 +33,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('/login', [UserController::class, 'view_login']);
     Route::get('/logout', [UserController::class, 'logout']);
     Route::get('/profile', [UserController::class, 'profile']);
+    Route::put('/user/{id}', [UserController::class, 'update']);
 });
 
 Route::group(['middleware' => 'LoggedIn'], function () {

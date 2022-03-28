@@ -1,3 +1,6 @@
+/public/assets/images/item/*.png
+/public/assets/images/item/*.jpg
+
 /node_modules
 /public/hot
 /public/storage

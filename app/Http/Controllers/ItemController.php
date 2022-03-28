@@ -4,14 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ItemRequest;
 use App\Models\Item;
-use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
     public function index()
     {
         $title = "Halaman Barang Inventaris";
-        $items = Item::get();
+        $items = Item::latest()->get();
 
         return view('item.index', compact('items', 'title'));
     }
@@ -25,9 +24,17 @@ class ItemController extends Controller
     public function store(ItemRequest $request)
     {
         $data = $request->validated();
-        $data['photo']?->move(public_path('images'), $data['photo']->getClientOriginalName());
+        $data['photo']->move(public_path('assets/images/item'), $data['photo']->getClientOriginalName());
+        $data['photo'] = $data['photo']->getClientOriginalName();
 
-        Item::create($data);
+        $status = Item::create($data);
+
+        if($status){
+            session()->flash('success', 'Sukses Menambahkan Item');
+        } else {
+            session()->flash('failed', 'Gagal Menambahkan Item');
+        }
+
         return redirect('item');
     }
 
@@ -50,6 +57,7 @@ class ItemController extends Controller
 
         if(isset($data['photo'])){
             $data['photo']->move(public_path('assets/images/item'), $data['photo']->getClientOriginalName());
+            $data['photo'] = $data['photo']->getClientOriginalName();
         }
 
         $status = Item::where('id', $id)->update($data);

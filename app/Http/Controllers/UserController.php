@@ -39,6 +39,10 @@ class UserController extends Controller
         Return redirect()->back();
     }
 
+    public function update(){
+
+    }
+
     public function logout(){
         request()->session()->forget('user');
         return redirect('user/login')->with('success', 'Sukses Melakukan Logout');

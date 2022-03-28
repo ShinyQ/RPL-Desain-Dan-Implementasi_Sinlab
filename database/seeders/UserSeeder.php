@@ -33,6 +33,20 @@ class UserSeeder extends Seeder
                 'photo'=> "",
                 'created_at' => Carbon::now()->addHour()
             ],
+            [
+                'name' => "Fadhlurrahman Akbar Nasution",
+                'email' => "fadhlurrahmanakbar@student.telkomuniversity.ac.id",
+                'role' => "super_user",
+                'photo'=> "https://i.ibb.co/gVHfkcr/unknown.png",
+                'created_at' => Carbon::now()->addHour()
+            ],
+            [
+                'name' => "Michael Putera Wardana",
+                'email' => "michaelputeraw@student.telkomuniversity.ac.id",
+                'role' => "super_user",
+                'photo'=> "https://lh3.googleusercontent.com/a-/AOh14GhMtMrFNJKQNZKjmyGQSFufWdJ1NnbQSGVnkVq2HA=s96-c",
+                'created_at' => Carbon::now()->addHour()
+            ],
         ];
 
         DB::table('users')->insert($data);
