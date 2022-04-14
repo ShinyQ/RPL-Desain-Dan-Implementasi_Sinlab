@@ -60,7 +60,7 @@ class ItemController extends Controller
             $data['photo'] = $data['photo']->getClientOriginalName();
         }
 
-        $status = Item::where('id', $id)->update($data);
+            $status = Item::where('id', $id)->update($data);
 
         if($status){
             session()->flash('success', 'Sukses Mengupdate Item');

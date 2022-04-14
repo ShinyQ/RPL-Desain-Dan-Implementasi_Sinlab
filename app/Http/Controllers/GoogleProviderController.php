@@ -10,7 +10,7 @@ use Laravel\Socialite\Facades\Socialite;
 
 class GoogleProviderController extends Controller
 {
-    public function redirectToGoogle(): \Symfony\Component\HttpFoundation\RedirectResponse|\Illuminate\Http\RedirectResponse
+    public function redirectToGoogle()
     {
         return Socialite::driver('google')->redirect();
     }

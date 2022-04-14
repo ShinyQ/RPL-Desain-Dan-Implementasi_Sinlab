@@ -9,6 +9,24 @@
         </div>
     </div>
 
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ $message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
+    @if ($message = Session::get('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ $message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
     <div class="section-body">
         <h2 class="section-title">Hi, {{ request()->session()->get('user')->name }}</h2>
         <p class="section-lead">
@@ -32,7 +50,9 @@
             </div>
             <div class="col-12 col-md-12 col-lg-7">
                 <div class="card">
-                    <form method="post" class="needs-validation" novalidate="">
+                    <form action="{{ url('user/'. Auth::user()->id) }}" method="post" class="needs-validation" novalidate="" enctype="multipart/form-data">
+                        @method('PUT')
+                        @csrf
                         <div class="card-header">
                             <h4>Edit Profile</h4>
                         </div>
@@ -40,7 +60,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>Phone</label>
-                                    <input type="text" placeholder="081xxx" class="form-control" value="{{ Auth::user()->phone }}" required="">
+                                    <input name="phone" type="text" placeholder="081xxx" class="form-control" value="{{ Auth::user()->phone }}" required="">
                                     <div class="invalid-feedback">
                                         Please fill the phone
                                     </div>
@@ -48,18 +68,24 @@
                                 <div class="form-group col-md-6">
                                     <label>Upload KTM</label>
                                     <div class="input-group d-flex justify-content-center">
-
+                                        @if(!Auth::user()->is_verified)
                                         <div id="image-preview" class="image-preview">
                                             <label for="image-upload" id="image-label">Choose File</label>
-                                            <input type="file" accept="image/*" name="photo" id="image-upload" />
+                                            <input type="file" accept="image/*" name="ktm" id="image-upload" />
                                         </div>
+                                        @else
+                                            <div id="image-preview" class="image-preview" style="background-image: url('{{ asset('assets/images/user/'.Auth::user()->id.'/'. Auth::user()->ktm) }}'); background-size: cover; background-position: center center;">
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        @if(!Auth::user()->is_verified)
                         <div class="card-footer text-right">
                             <button class="btn btn-primary">Save Changes</button>
                         </div>
+                        @endif
                     </form>
                 </div>
             </div>

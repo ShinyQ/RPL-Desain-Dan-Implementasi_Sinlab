@@ -32,7 +32,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Deskripsi Barang</label>
-                                <textarea class="form-control h-25" row="3" name="description"></textarea>
+                                <textarea class="form-control h-25" rows="5" name="description"></textarea>
                             </div>
                             <div class="form-group">
                                 <label>Jumlah Barang</label>

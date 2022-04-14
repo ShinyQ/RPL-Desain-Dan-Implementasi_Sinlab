@@ -8,12 +8,12 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="card">
-                    <div style="height: 350px" id='myDiv'></div>
+                    <div style="width: 100%; height: 350px" id='myDiv'></div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="card">
-                    <div style="height: 350px" id='myDiv2'></div>
+                    <div style="width: 100%; height: 350px" id='myDiv2'></div>
                 </div>
             </div>
         </div>
@@ -23,40 +23,39 @@
                 <div class="card">
                     <div class="card-header"><h4 style="font-size: 18px">Pengembalian Barang Terdekat</h4></div>
                     <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Nama</th>
-                                    <th scope="col">Nomor handphone</th>
-                                    <th scope="col">Tangal Pengembalian</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($deadline as $key => $val)
-                                <tr>
-                                    <th scope="row">{{ $key + 1 }}</th>
-                                    <td>{{ $val->user->name }}</td>
-                                    <td>{{ $val->user->phone }}</td>
-                                    <td>{{ $val->deadline }}</td>
-                                    <td>
-                                        <a class="btn btn-outline-primary" href="transaction/{{ $val->id }}">
-                                            Detail
-                                        </a>
-                                        &nbsp;
-                                        <a class="btn btn-primary" href="transaction/{{ $val->id }}">
-                                            Konfirmasi Pengembalian
-                                        </a>
-                                    </td>
-                                </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                        <table class="table" style="width: 100%">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nama</th>
+                                <th scope="col">Nomor handphone</th>
+                                <th scope="col">Tangal Pengembalian</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($deadline as $key => $val)
+                            <tr>
+                                <th scope="row">{{ $key + 1 }}</th>
+                                <td>{{ $val->user->name }}</td>
+                                <td>{{ $val->user->phone }}</td>
+                                <td>{{ $val->deadline }}</td>
+                                <td>
+                                    <a class="btn btn-primary" href="transaction/{{ $val->id }}">
+                                        Konfirmasi Pengembalian
+                                    </a> &nbsp;
+                                    <a class="btn btn-outline-primary" href="transaction/{{ $val->id }}">
+                                        Detail
+                                    </a>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -80,7 +79,7 @@
         const data = [trace0, trace1];
 
         const layout = {
-            title: 'Grafik Pinjam Dan Pengembalian Inventaris',
+            title: 'Grafik Transaksi Inventaris',
             xaxis: {
                 title: 'Tanggal'
             },
@@ -89,7 +88,7 @@
             }
         };
 
-        Plotly.newPlot('myDiv', data, layout);
+        Plotly.newPlot('myDiv', data, layout, {responsive: true});
     </script>
 
     <script>
@@ -104,14 +103,12 @@
 
         const layout1 = {
             title: 'Grafik Barang Dipinjam Terbanyak',
-            xaxis: {
-                title: 'Tanggal'
-            },
             yaxis: {
                 title: 'Jumlah'
             },
+
         };
 
-        Plotly.newPlot('myDiv2', data1, layout1);
+        Plotly.newPlot('myDiv2', data1, layout1, {responsive: true});
     </script>
 @endsection

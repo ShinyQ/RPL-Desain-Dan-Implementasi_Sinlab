@@ -141,6 +141,7 @@
                     }
                 });
             });
+
             $('.btn-review').on('click', function(event) {
                 var id = $(this).data('id');
                 $('#modalReview').modal('show');

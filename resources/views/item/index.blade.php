@@ -116,20 +116,19 @@
 <div class="modal modal-danger fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="Delete" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header mb-3">
                 <h5 class="modal-title" id="exampleModalLabel">Hapus Item</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <hr width="90%">
             <form id="deleteForm" method="post">
-                <div class="modal-body" style="padding-bottom: 5px">
+
                         @csrf
                         @method('DELETE')
                         <p style="font-size: 16px" class="text-center">Apakah Anda Yakin Ingin Menghapus Item?</p>
-                </div>
-                <hr width="90%">
+
+
                 <div class="modal-footer" style="padding-top: 5px">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-danger">Ya</button>
