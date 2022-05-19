@@ -75,14 +75,14 @@ class TransactionController extends Controller
      * @param  \App\Models\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TransactionRequest $requestTransaction)
+    public function update(Request $request, TransactionRequest $requestTransaction,Transaction $transaction)
     {
-        if ($requestTransaction->status == "Menunggu Persetujuan") {
-            $requestTransaction->feedback = $request->feedback;
+        if ($transaction->status == "Menunggu Persetujuan") {
+            $transaction->feedback = $request->feedback;
         }
 
-        $requestTransaction->status = $request->status;
-        $requestTransaction->save();
+        $transaction->status = $request->status;
+        $transaction->save();
 
         return Response()->json([
             'message' => 'OK',

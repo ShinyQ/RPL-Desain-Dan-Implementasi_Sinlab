@@ -108,7 +108,7 @@
                 $('#formprocess').attr('action', `request/${id}/edit`);
                 $('#formprocess').attr('data-id', id);
                 $.ajax({
-                    url: `request/${id}/edit`,
+                    url: `transaction/${id}/edit`,
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -152,6 +152,7 @@
                         alert('Internal Server Error');
                     }
                 });
+        });
         });
     </script>
 @endpush
