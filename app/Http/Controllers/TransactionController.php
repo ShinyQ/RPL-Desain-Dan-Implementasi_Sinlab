@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use App\Http\Requests\TransactionRequest;
+
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -60,9 +62,10 @@ class TransactionController extends Controller
      * @param  \App\Models\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function edit(Transaction $transaction)
+    public function edit(TransactionRequest $requestTransaction)
     {
         //
+        Response()->json($requestTransaction);
     }
 
     /**
@@ -72,9 +75,18 @@ class TransactionController extends Controller
      * @param  \App\Models\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Transaction $transaction)
+    public function update(Request $request, TransactionRequest $requestTransaction)
     {
-        //
+        if ($requestTransaction->status == "Menunggu Persetujuan") {
+            $requestTransaction->feedback = $request->feedback;
+        }
+
+        $requestTransaction->status = $request->status;
+        $requestTransaction->save();
+
+        return Response()->json([
+            'message' => 'OK',
+        ]);
     }
 
     /**
