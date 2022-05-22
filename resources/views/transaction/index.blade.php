@@ -108,7 +108,7 @@
                 $('#formprocess').attr('action', `request/${id}/edit`);
                 $('#formprocess').attr('data-id', id);
                 $.ajax({
-                    url: `request/${id}/edit`,
+                    url: `transaction/${id}/edit`,
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -128,6 +128,31 @@
                     }
                 });
             });
+            $('#btnSubmit').click(function(e) {
+                e.preventDefault();
+                var id = $('#formprocess').data('id');
+                $('#modalprocess').toggleClass('modal-progress');
+                $.ajax({
+                    url: `transaction/${id}`,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    method: 'POST',
+                    data: {
+                        status: $('#statusBarang').val(),
+                        feedback: $('#feedbackRequest').val(),
+                        _method: "PATCH"
+                    },
+                    success: function(data) {
+                        $('#modalprocess').toggleClass('modal-progress');
+                        location.reload();
+                    },
+                    error: function(data) {
+                        $('#modalprocess').toggleClass('modal-progress');
+                        alert('Internal Server Error');
+                    }
+                });
+        });
         });
     </script>
 @endpush
