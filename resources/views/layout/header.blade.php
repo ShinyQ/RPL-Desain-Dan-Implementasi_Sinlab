@@ -97,6 +97,14 @@
                                     <span>Permintaan Barang</span>
                                 </a>
                             </li>
+
+                            <li class={{ Request::is('admin/export') ? 'active' : '' }}>
+                                <a class="nav-link" href="{{ url('admin/export') }}">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>Ekspor Laporan</span>
+                                </a>
+                            </li>
+
                         @elseif(auth()->user()->role == 'user')
                             <li class="menu-header">Menu Peminjaman</li>
                             <li class={{ Request::is('item') ? 'active' : '' }}>

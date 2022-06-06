@@ -7,6 +7,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RequestItemController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\ExportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,6 +26,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'superuser'], function () {
     Route::resource('item', ItemController::class);
     Route::resource('request', RequestItemController::class);
     Route::resource('transaction', TransactionController::class);
+    Route::resource('export', ExportController::class);
     Route::get('user', [UserController::class, 'index']);
     Route::get('update_role/{id}/{role}', [UserController::class, 'update_role']);
 });
@@ -44,4 +46,6 @@ Route::group(['middleware' => 'LoggedIn'], function () {
 });
 
 Route::resource('/request', RequestItemController::class)->only(['index', 'store', 'create']);
+
+Route::get('/export_pdf', [ExportController::class, 'export_pdf'])->name('export_pdf');
 
