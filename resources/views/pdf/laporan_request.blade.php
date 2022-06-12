@@ -28,27 +28,26 @@
 </head>
 <body>
 
-<h1>Laporan Peminjaman</h1>
+<h1>Laporan Request</h1>
 
 <table id="laporan">
     <thead>
         <tr>
             <th>#</th>
-            <th>Peminjam</th>
+            <th>Nama Barang</th>
+            <th>Deskripsi</th>
+            <th>Jumlah</th>
             <th>Status</th>
-            <th>Deadline</th>
-            <th>Feedback</th>
-            <th>Tanggal Pinjam</th>
-            @if (auth()->user()->role == 'super_user')
-                <th>Tanggal Dibuat</th>
-            @endif
+            <th>Tanggal Dibuat</th>
         </tr>
     </thead>
     <tbody>
-        @foreach ($items as $key => $item)
+        @forelse($data as $key => $item)
             <tr>
                 <td>{{ $key + 1 }}</td>
-                <td>{{ $item->user->name }}</td>
+                <td>{{ $item->name }}</td>
+                <td>{{ $item->description }}</td>
+                <td>{{ $item->qty }}</td>
                 <td>
                     @if ($item->status == 'Diterima')
                         <div class="badge badge-success">{{ $item->status }}</div>
@@ -58,14 +57,12 @@
                         <div class="badge badge-warning">{{ $item->status }}</div>
                     @endif
                 </td>
-                <td>{{ $item->deadline }}</td>
-                <td>{{ $item->feedback }}</td>
-                <td>21-April-2022</td>
-                @if (auth()->user()->role == 'super_user')
-                    <td>{{ $item->created_at }}</td>
-                @endif
+                <td>{{ $item->created_at }}</td>
             </tr>
-        @endforeach
+        @empty
+            Data Masih Kosong
+        @endforelse
+        
     </tbody>
 </table>
 

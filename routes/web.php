@@ -7,7 +7,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RequestItemController;
 use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\ExportController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,12 +23,19 @@ Route::get('auth/callback', [GoogleProviderController::class, 'redirectToGoogle'
 Route::get('auth/google/callback', [GoogleProviderController::class, 'handleCallback']);
 
 Route::group(['prefix' => 'admin', 'middleware' => 'superuser'], function () {
+    //export route
+    Route::get('transaction/export_pdf', [TransactionController::class, 'export_pdf'])->name('export_pdf');
+    Route::get('item/export_pdf', [ItemController::class, 'export_pdf'])->name('export_pdf');
+    Route::get('request/export_pdf', [RequestItemController::class, 'export_pdf'])->name('export_pdf');
+
+    //another normal route
     Route::resource('item', ItemController::class);
     Route::resource('request', RequestItemController::class);
     Route::resource('transaction', TransactionController::class);
-    Route::resource('export', ExportController::class);
     Route::get('user', [UserController::class, 'index']);
     Route::get('update_role/{id}/{role}', [UserController::class, 'update_role']);
+    
+    Route::get('export', [TransactionController::class, 'export_index']);
 });
 
 Route::group(['prefix' => 'user'], function () {
@@ -46,6 +53,3 @@ Route::group(['middleware' => 'LoggedIn'], function () {
 });
 
 Route::resource('/request', RequestItemController::class)->only(['index', 'store', 'create']);
-
-Route::get('/export_pdf', [ExportController::class, 'export_pdf'])->name('export_pdf');
-

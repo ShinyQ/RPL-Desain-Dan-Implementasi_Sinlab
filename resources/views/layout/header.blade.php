@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/datatables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/select.bootstrap4.min.css') }}">
-
+    
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 </head>
 

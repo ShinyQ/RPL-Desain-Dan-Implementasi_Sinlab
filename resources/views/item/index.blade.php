@@ -29,6 +29,7 @@
             @if (auth()->user()->role == 'super_user')
                 <div class="card-header d-flex justify-content-between">
                     <a href="{{ url('item/create') }}" class="btn btn-icon icon-left btn-primary"><i class="fa fa-plus"></i>&nbsp; Tambah Barang Inventaris</a>
+                    <a class="btn btn-success btn-export">Export PDF</a>
                 </div>
             @else
                 <div class="card-header d-flex justify-content-between">
@@ -185,6 +186,28 @@
     </div>
 </div>
 
+<div class="modal fade show" tabindex="-1" role="dialog" id="modalexport">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalexportTitle">export</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="input-group input-daterange">
+                <input type="text" name="from_date" id="from_date" class="form-control" />
+                <div class="input-group-addon">to</div>
+                <input type="text"  name="to_date" id="to_date" class="form-control" />
+            </div>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="export">Submit export</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @push('scripts')
     <script>
         $(document).ready(function() {
@@ -229,6 +252,27 @@
 
                 });
             })
+
+            $('.btn-export').on('click', function(event) {
+                var date = new Date();
+
+                $('#modalexport').modal('show');
+                
+                $('.input-daterange').datepicker({
+                    todayBtn: 'linked',
+                    format: 'yyyy-mm-dd',
+                    autoclose: true
+                });
+            });
+
+            $('#export').click(function(){
+                var from_date = $( "#from_date" ).val();
+                var to_date = $( "#to_date" ).val();
+
+                var _token = $('input[name="_token"]').val();
+                window.open(`item/export_pdf?fromDate=${from_date}&toDate=${to_date}`, 'name');
+            });
+
         });
     </script>
 @endpush
