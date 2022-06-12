@@ -43,7 +43,7 @@
                                         <td>{{ $val->user->phone }}</td>
                                         <td>{{ $val->deadline }}</td>
                                         <td>
-                                            <a class="btn btn-primary" href="transaction}">
+                                            <a class="btn btn-primary" href="transaction">
                                                 Konfirmasi Pengembalian
                                             </a> &nbsp;
                                             <a class="btn btn-outline-primary" href="transaction/{{ $val->id }}">
