@@ -22,6 +22,7 @@ class TransactionFactory extends Factory
             'user_id' => User::where('role', '!=', 'super_user')->get()->random()->id,
             'admin_id' => User::where('role', 'super_user')->get()->random()->id,
             'status' => $this->faker->randomElement(['Menunggu Persetujuan', 'Ditolak', 'Diterima']),
+            'start_date' => Carbon::now(),
             'deadline' => Carbon::now()->addDays(rand(2, 5)),
             'reason' => $this->faker->sentence,
             'feedback' => $this->faker->sentence,
