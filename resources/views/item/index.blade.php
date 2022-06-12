@@ -26,19 +26,21 @@
 
     <div class="section-body">
         <div class="card">
-            @if (auth()->user()->role == 'super_user')
-                <div class="card-header d-flex justify-content-between">
-                    <a href="{{ url('item/create') }}" class="btn btn-icon icon-left btn-primary"><i class="fa fa-plus"></i>&nbsp; Tambah Barang Inventaris</a>
-                </div>
-            @else
-                <div class="card-header d-flex justify-content-between">
-                    <a href="{{ url('transaction/create') }}" class="btn btn-icon icon-left btn-primary"><i class="fa fa-plus"></i> Pinjam Barang</a>
-                    @if (auth()->user()->role == 'user')
-                        <button class="btn btn-icon icon-left btn-primary" id="btnRequest"><i class="fa fa-comment"></i> Ajukan Inventaris</button>
-                    @endif
-                </div>
-            @endif
             <div class="card-body">
+                @if (auth()->user()->role == 'super_user')
+                    <div class="card-header d-flex justify-content-between">
+                        <a href="{{ url('item/create') }}" class="btn btn-icon icon-left btn-primary"><i class="fa fa-plus"></i>&nbsp; Tambah Barang Inventaris</a>
+                        <a class="btn btn-success btn-export" href="#">Export PDF</a>
+                    </div>
+                @else
+                    <div class="card-header d-flex justify-content-between">
+                        <a href="{{ url('transaction/create') }}" class="btn btn-icon icon-left btn-primary"><i class="fa fa-plus"></i> Pinjam Barang</a>
+                        @if (auth()->user()->role == 'user')
+                            <button class="btn btn-icon icon-left btn-primary" id="btnRequest"><i class="fa fa-comment"></i> Ajukan Inventaris</button>
+                        @endif
+                    </div>
+                @endif
+
                 <div class="table-responsive">
                     <table id="dataTable" class="table-bordered table-md table">
                         <thead>
@@ -74,10 +76,10 @@
                                         </td>
                                     @endif
                                     <td>{{ $key + 1 }}</td>
-                                    @if(substr("$item->photo",0,5) == "https")
+                                    @if (substr("$item->photo", 0, 5) == 'https')
                                         <td><img width="100" src="{{ $item->photo }}" alt=""></td>
                                     @else
-                                        <td><img width="100" src="{{ asset('assets/images/item/'. $item->photo) }}" alt=""></td>
+                                        <td><img width="100" src="{{ asset('assets/images/item/' . $item->photo) }}" alt=""></td>
                                     @endif
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->description }}</td>
@@ -85,12 +87,8 @@
                                     @if (auth()->user()->role == 'super_user')
                                         <td>{{ $item->created_at }}</td>
                                         <td>
-                                            <a href="{{ url('admin/item/'.$item->id.'/edit') }}" class="btn btn-primary">Edit</a>
-                                            <a
-                                                href="#" data-id="{{$item->id}}"
-                                                class="btn btn-outline-primary delete"
-                                                data-toggle="modal"
-                                                data-target="#deleteModal">Hapus
+                                            <a href="{{ url('admin/item/' . $item->id . '/edit') }}" class="btn btn-primary">Edit</a>
+                                            <a href="#" data-id="{{ $item->id }}" class="btn btn-outline-primary delete" data-toggle="modal" data-target="#deleteModal">Hapus
                                             </a>
                                         </td>
                                     @endif
@@ -106,7 +104,7 @@
     </div>
 
     <script>
-        $(document).on('click','.delete',function(){
+        $(document).on('click', '.delete', function() {
             let id = $(this).attr('data-id');
             $('#deleteForm').attr('action', '/admin/item/' + id);
         });
@@ -124,9 +122,9 @@
             </div>
             <form id="deleteForm" method="post">
 
-                        @csrf
-                        @method('DELETE')
-                        <p style="font-size: 16px" class="text-center">Apakah Anda Yakin Ingin Menghapus Item?</p>
+                @csrf
+                @method('DELETE')
+                <p style="font-size: 16px" class="text-center">Apakah Anda Yakin Ingin Menghapus Item?</p>
 
 
                 <div class="modal-footer" style="padding-top: 5px">
@@ -185,6 +183,38 @@
     </div>
 </div>
 
+<div class="modal fade show" tabindex="-1" role="dialog" id="modalexport">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalexportTitle">export</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form data-id="">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>From date</label>
+                            <input type="text" name="from_date" id="from_date" class="form-control datetimepicker" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>To date</label>
+                            <input type="text" name="to_date" id="to_date" class="form-control datetimepicker" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="export">Submit export</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @push('scripts')
     <script>
         $(document).ready(function() {
@@ -229,6 +259,27 @@
 
                 });
             })
+
+            $('.btn-export').on('click', function(event) {
+                var date = new Date();
+
+                $('#modalexport').modal('show');
+
+                $('.input-daterange').datepicker({
+                    todayBtn: 'linked',
+                    format: 'yyyy-mm-dd',
+                    autoclose: true
+                });
+            });
+
+            $('#export').click(function() {
+                var from_date = $("#from_date").val();
+                var to_date = $("#to_date").val();
+
+                var _token = $('input[name="_token"]').val();
+                window.open(`item/export_pdf?fromDate=${from_date}&toDate=${to_date}`, 'name');
+            });
+
         });
     </script>
 @endpush

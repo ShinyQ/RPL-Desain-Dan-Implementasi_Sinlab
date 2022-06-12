@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use App\Http\Requests\TransactionRequest;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 use Illuminate\Http\Request;
 
@@ -20,6 +21,26 @@ class TransactionController extends Controller
         $items = Transaction::latest()->paginate(4);
         $title = "Halaman Transaction";
         return view('transaction.index', compact('title', 'items'));
+    }
+
+    public function export_pdf(Request $request)
+    {
+
+        $fromDate = $request->query('fromDate');
+        $toDate = $request->query('toDate');
+
+            if($fromDate != '' && $toDate != '')
+            {
+                $data = Transaction::whereBetween('created_at', array($fromDate, $toDate))->get();
+            }
+            else
+            {
+                $data = Transaction::table('created_at')->orderBy('created_at', 'desc')->get();
+            }
+
+        $title = "Laporan";
+        $pdf = PDF::loadView('pdf.laporan_transaksi', compact('title', 'data'));
+        return $pdf->download("laporan_transaksi_{{$fromDate}}_{{$toDate}}.pdf");
     }
 
     /**

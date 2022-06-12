@@ -9,6 +9,12 @@
     <div class="section-body">
         <div class="card">
             <div class="card-body">
+                @if (auth()->user()->role == 'super_user')
+                    <div class="card-header d-flex justify-content-between">
+                        <a></a>
+                        <a class="btn btn-success btn-export" href="#">Export PDF</a>
+                    </div>
+                @endif
                 <div class="table-responsive">
                     <table id="dataTable" class="table-bordered table-md table">
                         <thead>
@@ -110,6 +116,39 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade show" tabindex="-1" role="dialog" id="modalexport">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalexportTitle">export</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form data-id="">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>From date</label>
+                            <input type="text" name="from_date" id="from_date" class="form-control datetimepicker" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>To date</label>
+                            <input type="text" name="to_date" id="to_date" class="form-control datetimepicker" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="export">Submit export</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @push('scripts')
     <script>
         $(document).ready(function() {
@@ -196,6 +235,18 @@
                         alert('Internal Server Error');
                     }
                 });
+            });
+
+            $('.btn-export').on('click', function(event) {
+                $('#modalexport').modal('show');
+            });
+
+            $('#export').click(function() {
+                var from_date = $("#from_date").val();
+                var to_date = $("#to_date").val();
+
+                var _token = $('input[name="_token"]').val();
+                window.open(`request/export_pdf?fromDate=${from_date}&toDate=${to_date}`, 'name');
             });
         });
     </script>

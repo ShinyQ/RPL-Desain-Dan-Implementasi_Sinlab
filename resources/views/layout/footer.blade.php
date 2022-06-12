@@ -18,11 +18,38 @@
 <script src="{{ asset('assets/js/jquery.selectric.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.uploadPreview.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap-tagsinput.min.js') }}"></script>
+<script src="{{ asset('assets/js/daterangepicker.js') }}"></script>
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('assets/js/page/components-table.js') }}"></script>
 
 @stack('scripts')
+
+<script>
+  if(jQuery().daterangepicker) {
+    if($(".datepicker").length) {
+      $('.datepicker').daterangepicker({
+        locale: {format: 'YYYY-MM-DD'},
+        singleDatePicker: true,
+      });
+    }
+    if($(".datetimepicker").length) {
+      $('.datetimepicker').daterangepicker({
+        locale: {format: 'YYYY-MM-DD hh:mm'},
+        singleDatePicker: true,
+        timePicker: true,
+        timePicker24Hour: true,
+      });
+    }
+    if($(".daterange").length) {
+      $('.daterange').daterangepicker({
+        locale: {format: 'YYYY-MM-DD'},
+        drops: 'down',
+        opens: 'right'
+      });
+    }
+  }
+  </script>
 </body>
 
 </html>

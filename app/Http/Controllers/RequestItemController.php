@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\RequestItem;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class RequestItemController extends Controller
 {
@@ -17,6 +18,26 @@ class RequestItemController extends Controller
         $items = RequestItem::latest()->paginate(5);
         $title = "Halaman Request Item";
         return view('request.index', compact('title', 'items'));
+    }
+
+    public function export_pdf(Request $request)
+    {
+
+        $fromDate = $request->query('fromDate');
+        $toDate = $request->query('toDate');
+
+            if($fromDate != '' && $toDate != '')
+            {
+                $data = RequestItem::whereBetween('created_at', array($fromDate, $toDate))->get();
+            }
+            else
+            {
+                $data = RequestItem::table('created_at')->orderBy('created_at', 'desc')->get();
+            }
+
+        $title = "Laporan";
+        $pdf = PDF::loadView('pdf.laporan_request', compact('title', 'data'));
+        return $pdf->download("laporan_request_{{$fromDate}}_{{$toDate}}.pdf");
     }
 
     /**
