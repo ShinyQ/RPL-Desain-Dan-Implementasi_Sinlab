@@ -34,7 +34,7 @@
                     </div>
                 @else
                     <div class="card-header d-flex justify-content-between">
-                        <a href="{{ url('transaction/create') }}" class="btn btn-icon icon-left btn-primary"><i class="fa fa-plus"></i> Pinjam Barang</a>
+                        <a id="transaction" class="btn btn-icon icon-left btn-primary"><i class="fa fa-plus"></i> Pinjam Barang</a>
                         @if (auth()->user()->role == 'user')
                             <button class="btn btn-icon icon-left btn-primary" id="btnRequest"><i class="fa fa-comment"></i> Ajukan Inventaris</button>
                         @endif
@@ -70,7 +70,7 @@
                                     @if (auth()->user()->role != 'super_user')
                                         <td>
                                             <div class="custom-checkbox custom-control">
-                                                <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-{{ $key + 1 }}">
+                                                <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-{{ $key + 1 }}" data-id="{{ $item->id }}">
                                                 <label for="checkbox-{{ $key + 1 }}" class="custom-control-label">&nbsp;</label>
                                             </div>
                                         </td>
@@ -227,7 +227,7 @@
             $('#decQty').on("click", function(event) {
                 let current = parseInt($('#qtyBarang').val())
                 $('#qtyBarang').val(current - 1 > 1 ? --current : 1);
-                if (current - 1 <= 1) {
+                if (current - 1 <= 0) {
                     $('#decQty').attr("disabled", true);
                 }
             })
@@ -269,6 +269,29 @@
                     todayBtn: 'linked',
                     format: 'yyyy-mm-dd',
                     autoclose: true
+                });
+            });
+
+            $("[data-checkboxes]").each(function() {
+                var me = $(this),
+                    group = me.data('checkboxes'),
+                    role = me.data('checkbox-role');
+
+                me.change(function() {
+                    var all = $('[data-checkboxes="' + group + '"]:not([data-checkbox-role="dad"])'),
+                        checked = $('[data-checkboxes="' + group + '"]:not([data-checkbox-role="dad"]):checked'),
+                        dad = $('[data-checkboxes="' + group + '"][data-checkbox-role="dad"]'),
+                        total = all.length,
+                        checked_length = checked.length;
+                    if (checked_length <= 0) {
+                        $("#transaction").removeAttr('href');
+                        return
+                    }
+                    let queryParams = ""
+                    for (let i = 0; i < checked_length; i++) {
+                        queryParams += `items[]=${$(checked[i]).data("id")}&`
+                    }
+                    $("#transaction").attr("href", `{{ url('transaction/create') }}?${queryParams}`);
                 });
             });
 

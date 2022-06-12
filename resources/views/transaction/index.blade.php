@@ -22,9 +22,9 @@
                                 <th>#</th>
                                 <th>Peminjam</th>
                                 <th>Status</th>
+                                <th>Tanggal Pinjam</th>
                                 <th>Deadline</th>
                                 <th>Feedback</th>
-                                <th>Tanggal Pinjam</th>
                                 @if (auth()->user()->role == 'super_user')
                                     <th>Tanggal Dibuat</th>
                                     <th>Action</th>
@@ -41,13 +41,15 @@
                                             <div class="badge badge-success">{{ $item->status }}</div>
                                         @elseif ($item->status == 'Ditolak')
                                             <div class="badge badge-danger">{{ $item->status }}</div>
+                                        @elseif ($item->status == 'Selesai')
+                                            <div class="badge badge-info">{{ $item->status }}</div>
                                         @else
                                             <div class="badge badge-warning">{{ $item->status }}</div>
                                         @endif
                                     </td>
+                                    <td>{{ $item->start_date }}</td>
                                     <td>{{ $item->deadline }}</td>
                                     <td>{{ $item->feedback }}</td>
-                                    <td>21-April-2022</td>
                                     @if (auth()->user()->role == 'super_user')
                                         <td>{{ $item->created_at }}</td>
                                         <td>
@@ -55,6 +57,10 @@
                                                 <a href="{{ URL('transaction/' . $item->id) }}" class="btn btn-outline-primary btn-detail mr-1" data-id="{{ $item->id }}">Detail</a>
                                                 @if ($item->status == 'Menunggu Persetujuan')
                                                     <button class="btn btn-primary btn-process" data-id="{{ $item->id }}">Proses</button>
+                                                @elseif($item->status == 'Diterima')
+                                                    <button class="btn btn-primary btn-konfirmasi" href="#" data-id="{{ $item->id }}">
+                                                        Konfirmasi
+                                                    </button>
                                                 @endif
                                             </div>
                                         </td>
@@ -84,8 +90,8 @@
                     <div class="form-group">
                         <label>Status</label>
                         <select class="form-control" id="statusBarang" disabled="true">
-                            <option>Terima</option>
-                            <option>Tolak</option>
+                            <option>Diterima</option>
+                            <option>Ditolak</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -126,6 +132,29 @@
     </div>
 </div>
 
+
+<div class="modal modal-danger fade" id="konfirmasiModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header mb-3">
+                <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Pengembalian Barang</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="konfirmasiForm" method="post">
+                <input type="hidden" class="form-control" name="id" id="transactionId">
+                <p style="font-size: 16px" class="text-center">Apakah Anda Yakin Barang Sudah Dikembalikan?</p>
+
+                <div class="modal-footer" style="padding-top: 5px">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger" id="btnSubmitKonfirmasi">Ya</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 @push('scripts')
     <script>
         $(document).ready(function() {
@@ -152,6 +181,35 @@
                     },
                     error: function() {
                         $('#modalprocess').toggleClass('modal-progress');
+                        alert('Internal Server Error');
+                    }
+                });
+            });
+            $('.btn-konfirmasi').on('click', function(event) {
+                var id = $('.btn-konfirmasi').data('id');
+                $('#transactionId').val(id);
+                $('#konfirmasiModal').modal('show');
+            });
+            $('#btnSubmitKonfirmasi').click(function(e) {
+                e.preventDefault();
+                var id = $('#transactionId').val();;
+                $('#konfirmasiModal').toggleClass('modal-progress');
+                $.ajax({
+                    url: `transaction/${id}`,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    method: 'POST',
+                    data: {
+                        status: 'Selesai',
+                        _method: "PATCH"
+                    },
+                    success: function(data) {
+                        $('#konfirmasiModal').toggleClass('modal-progress');
+                        location.reload();
+                    },
+                    error: function(data) {
+                        $('#konfirmasiModal').toggleClass('modal-progress');
                         alert('Internal Server Error');
                     }
                 });

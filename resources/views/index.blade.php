@@ -21,36 +21,38 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header"><h4 style="font-size: 18px">Pengembalian Barang Terdekat</h4></div>
+                    <div class="card-header">
+                        <h4 style="font-size: 18px">Pengembalian Barang Terdekat</h4>
+                    </div>
                     <div class="card-body">
                         <table class="table" style="width: 100%">
                             <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Nama</th>
-                                <th scope="col">Nomor handphone</th>
-                                <th scope="col">Tangal Pengembalian</th>
-                                <th scope="col">Action</th>
-                            </tr>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nama</th>
+                                    <th scope="col">Nomor handphone</th>
+                                    <th scope="col">Tangal Pengembalian</th>
+                                    <th scope="col">Action</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach($deadline as $key => $val)
-                            <tr>
-                                <th scope="row">{{ $key + 1 }}</th>
-                                <td>{{ $val->user->name }}</td>
-                                <td>{{ $val->user->phone }}</td>
-                                <td>{{ $val->deadline }}</td>
-                                <td>
-                                    <a class="btn btn-primary" href="transaction/{{ $val->id }}">
-                                        Konfirmasi Pengembalian
-                                    </a> &nbsp;
-                                    <a class="btn btn-outline-primary" href="transaction/{{ $val->id }}">
-                                        Detail
-                                    </a>
-                                    &nbsp;
-                                </td>
-                            </tr>
-                            @endforeach
+                                @foreach ($deadline as $key => $val)
+                                    <tr>
+                                        <th scope="row">{{ $key + 1 }}</th>
+                                        <td>{{ $val->user->name }}</td>
+                                        <td>{{ $val->user->phone }}</td>
+                                        <td>{{ $val->deadline }}</td>
+                                        <td>
+                                            <a class="btn btn-primary" href="transaction}">
+                                                Konfirmasi Pengembalian
+                                            </a> &nbsp;
+                                            <a class="btn btn-outline-primary" href="transaction/{{ $val->id }}">
+                                                Detail
+                                            </a>
+                                            &nbsp;
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -88,7 +90,9 @@
             }
         };
 
-        Plotly.newPlot('myDiv', data, layout, {responsive: true});
+        Plotly.newPlot('myDiv', data, layout, {
+            responsive: true
+        });
     </script>
 
     <script>
@@ -109,6 +113,8 @@
 
         };
 
-        Plotly.newPlot('myDiv2', data1, layout1, {responsive: true});
+        Plotly.newPlot('myDiv2', data1, layout1, {
+            responsive: true
+        });
     </script>
 @endsection

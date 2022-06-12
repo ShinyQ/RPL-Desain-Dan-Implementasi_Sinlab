@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
 use App\Models\Transaction;
+use App\Models\TransactionItem;
 use App\Http\Requests\TransactionRequest;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 
@@ -48,13 +51,19 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $items = [];
+        $queryParams = '';
+        if ($request->query('items')){
+            $items = Item::whereIn('id', $request->query('items'))->get();
+        }
+
         $title = "Ajukan Peminjaman";
-        return view('transaction.create', compact('title'));
+        return view('transaction.create', compact('title','items'));
     }
 
-    /**
+    /**$
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -62,7 +71,21 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $transaction = Transaction::create([
+            'user_id' => Auth::user()->id,
+            'start_date'=> $request->startDate,
+            'deadline'=> $request->deadline,
+            'reason'=> $request->reason,
+        ]);
+        foreach ($request->ids as $key => $id ) {
+            TransactionItem::create([
+                'transaction_id'=>$transaction->id,
+                'item_id'=> $id,
+                'qty' => $request->qty[$key],
+            ]);
+        }
+        session()->flash('success', 'Sukses Mengajukan Pinjaman');
+        return redirect('item');
     }
 
     /**
@@ -74,7 +97,8 @@ class TransactionController extends Controller
     public function show(Transaction $transaction)
     {
         $title = "Peminjaman";
-        return view('transaction.show', compact('title'));
+        $items = Item::where('id', $transaction->id)->get();
+        return view('transaction.show', compact('title','transaction', 'items'));
     }
 
     /**

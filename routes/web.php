@@ -50,4 +50,4 @@ Route::group(['middleware' => 'LoggedIn'], function () {
     Route::resource('transaction', TransactionController::class)->only(['index', 'store', 'create', 'show','update']);
 });
 
-Route::resource('/request', RequestItemController::class)->only(['index', 'store', 'create']);
+Route::resource('/request', RequestItemController::class)->only(['index','show', 'store', 'create']);

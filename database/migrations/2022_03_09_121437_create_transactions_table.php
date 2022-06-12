@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('admin_id')->constrained('users');
+            $table->integer('admin_id')->unsigned()->nullable();
             $table->string('status')->default('Menunggu Persetujuan');
+            $table->datetime('start_date');
             $table->datetime('deadline');
             $table->string("reason");
             $table->string('feedback')->nullable();
