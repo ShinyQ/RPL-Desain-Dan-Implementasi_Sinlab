@@ -34,8 +34,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'superuser'], function () {
     Route::resource('transaction', TransactionController::class);
     Route::get('user', [UserController::class, 'index']);
     Route::get('update_role/{id}/{role}', [UserController::class, 'update_role']);
-    
-    Route::get('export', [TransactionController::class, 'export_index']);
 });
 
 Route::group(['prefix' => 'user'], function () {

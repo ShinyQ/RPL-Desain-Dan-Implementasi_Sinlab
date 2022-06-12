@@ -19,7 +19,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/datatables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/select.bootstrap4.min.css') }}">
-    
+    <link rel="stylesheet" href="{{ asset('assets/css/daterangepicker.css') }}">
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 </head>
 
@@ -62,7 +63,7 @@
                     <ul class="sidebar-menu">
                         @if (auth()->user()->role == 'super_user')
                             <li class="menu-header">Menu Utama</li>
-                            <li  class="{{ Request::is('/') ? 'active' : '' }}">
+                            <li class="{{ Request::is('/') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ url('/') }}">
                                     <i class="fas fa-chart-bar"></i>
                                     <span>Halaman Dashboard</span>
@@ -97,14 +98,6 @@
                                     <span>Permintaan Barang</span>
                                 </a>
                             </li>
-
-                            <li class={{ Request::is('admin/export') ? 'active' : '' }}>
-                                <a class="nav-link" href="{{ url('admin/export') }}">
-                                    <i class="fas fa-file-alt"></i>
-                                    <span>Ekspor Laporan</span>
-                                </a>
-                            </li>
-
                         @elseif(auth()->user()->role == 'user')
                             <li class="menu-header">Menu Peminjaman</li>
                             <li class={{ Request::is('item') ? 'active' : '' }}>

@@ -23,30 +23,21 @@ class TransactionController extends Controller
         return view('transaction.index', compact('title', 'items'));
     }
 
-    public function export_index()
-    {
-        //
-        $items = Transaction::latest()->paginate(4);
-        $title = "Halaman Ekspor";
-        return view('export.index', compact('title', 'items'));
-    }
-
     public function export_pdf(Request $request)
     {
-        //
+
         $fromDate = $request->query('fromDate');
         $toDate = $request->query('toDate');
 
             if($fromDate != '' && $toDate != '')
             {
-                $data = Transaction::whereBetween('created_at', array($fromDate, $toDate))
-                    ->get();
+                $data = Transaction::whereBetween('created_at', array($fromDate, $toDate))->get();
             }
             else
             {
                 $data = Transaction::table('created_at')->orderBy('created_at', 'desc')->get();
             }
-        
+
         $title = "Laporan";
         $pdf = PDF::loadView('pdf.laporan_transaksi', compact('title', 'data'));
         return $pdf->download("laporan_transaksi_{{$fromDate}}_{{$toDate}}.pdf");

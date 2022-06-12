@@ -11,7 +11,8 @@
             <div class="card-body">
                 @if (auth()->user()->role == 'super_user')
                     <div class="card-header d-flex justify-content-between">
-                        <a class="btn btn-success btn-export">Export PDF</a>
+                        <a></a>
+                        <a class="btn btn-success btn-export" href="#">Export PDF</a>
                     </div>
                 @endif
                 <div class="table-responsive">
@@ -125,10 +126,19 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="input-group input-daterange">
-                <input type="text" name="from_date" id="from_date" class="form-control" />
-                <div class="input-group-addon">to</div>
-                <input type="text"  name="to_date" id="to_date" class="form-control" />
+            <div class="modal-body">
+                <form data-id="">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>From date</label>
+                            <input type="text" name="from_date" id="from_date" class="form-control datetimepicker" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>To date</label>
+                            <input type="text" name="to_date" id="to_date" class="form-control datetimepicker" />
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer bg-whitesmoke br">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -137,6 +147,7 @@
         </div>
     </div>
 </div>
+
 
 @push('scripts')
     <script>
@@ -227,26 +238,16 @@
             });
 
             $('.btn-export').on('click', function(event) {
-                var date = new Date();
-
                 $('#modalexport').modal('show');
-                
-                $('.input-daterange').datepicker({
-                    todayBtn: 'linked',
-                    format: 'yyyy-mm-dd',
-                    autoclose: true
-                });
             });
 
-            $('#export').click(function(){
-                
-                var from_date = $( "#from_date" ).val();
-                var to_date = $( "#to_date" ).val();
+            $('#export').click(function() {
+                var from_date = $("#from_date").val();
+                var to_date = $("#to_date").val();
 
                 var _token = $('input[name="_token"]').val();
                 window.open(`request/export_pdf?fromDate=${from_date}&toDate=${to_date}`, 'name');
             });
-
         });
     </script>
 @endpush

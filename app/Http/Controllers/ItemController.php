@@ -19,20 +19,19 @@ class ItemController extends Controller
 
     public function export_pdf(Request $request)
     {
-        //
+
         $fromDate = $request->query('fromDate');
         $toDate = $request->query('toDate');
 
             if($fromDate != '' && $toDate != '')
             {
-                $data = Item::whereBetween('created_at', array($fromDate, $toDate))
-                    ->get();
+                $data = Item::whereBetween('created_at', array($fromDate, $toDate))->get();
             }
             else
             {
                 $data = Item::table('created_at')->orderBy('created_at', 'desc')->get();
             }
-        
+
         $title = "Laporan";
         $pdf = PDF::loadView('pdf.laporan_item', compact('title', 'data'));
         return $pdf->download("laporan_item_{{$fromDate}}_{{$toDate}}.pdf");
