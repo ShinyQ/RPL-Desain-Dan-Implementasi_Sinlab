@@ -20,8 +20,13 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
-        $items = Transaction::latest()->paginate(4);
+        $user = Auth::user();
+        $items = [];
+        if ($user->role != "super_user"){
+            $items =  Transaction::where('id', $user->id)->paginate(5);
+        }else{
+            $items = Transaction::latest()->paginate(5);
+        }
         $title = "Halaman Transaction";
         return view('transaction.index', compact('title', 'items'));
     }

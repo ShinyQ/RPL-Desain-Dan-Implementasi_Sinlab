@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\RequestItem;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 
 class RequestItemController extends Controller
 {
@@ -15,7 +16,13 @@ class RequestItemController extends Controller
      */
     public function index()
     {
-        $items = RequestItem::latest()->paginate(5);
+        $user = Auth::user();
+        $items = [];
+        if ($user->role != "super_user"){
+            $items =  RequestItem::where('id', $user->id)->paginate(5);
+        }else{
+            $items = RequestItem::latest()->paginate(5);
+        }
         $title = "Halaman Request Item";
         return view('request.index', compact('title', 'items'));
     }
