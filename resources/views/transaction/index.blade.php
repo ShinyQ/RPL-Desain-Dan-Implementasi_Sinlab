@@ -119,10 +119,19 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="input-group input-daterange">
-                <input type="text" name="from_date" id="from_date" class="form-control" />
-                <div class="input-group-addon">to</div>
-                <input type="text" name="to_date" id="to_date" class="form-control" />
+            <div class="modal-body">
+                <form data-id="">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>From date</label>
+                            <input type="text" name="from_date" id="from_date" class="form-control datetimepicker" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>To date</label>
+                            <input type="text" name="to_date" id="to_date" class="form-control datetimepicker" />
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer bg-whitesmoke br">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
