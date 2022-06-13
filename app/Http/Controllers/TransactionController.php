@@ -23,7 +23,7 @@ class TransactionController extends Controller
         $user = Auth::user();
         $items = [];
         if ($user->role != "super_user"){
-            $items =  Transaction::where('id', $user->id)->paginate(5);
+            $items =  Transaction::where('user_id', $user->id)->paginate(5);
         }else{
             $items = Transaction::latest()->paginate(5);
         }
