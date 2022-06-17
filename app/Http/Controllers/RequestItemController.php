@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RequestItemRequest;
 use App\Models\RequestItem;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -18,9 +19,9 @@ class RequestItemController extends Controller
     {
         $user = Auth::user();
         $items = [];
-        if ($user->role != "super_user"){
+        if ($user->role != "super_user") {
             $items =  RequestItem::where('user_id', $user->id)->paginate(5);
-        }else{
+        } else {
             $items = RequestItem::latest()->paginate(5);
         }
         $title = "Halaman Request Item";
@@ -33,14 +34,11 @@ class RequestItemController extends Controller
         $fromDate = $request->query('fromDate');
         $toDate = $request->query('toDate');
 
-            if($fromDate != '' && $toDate != '')
-            {
-                $data = RequestItem::whereBetween('created_at', array($fromDate, $toDate))->get();
-            }
-            else
-            {
-                $data = RequestItem::table('created_at')->orderBy('created_at', 'desc')->get();
-            }
+        if ($fromDate != '' && $toDate != '') {
+            $data = RequestItem::whereBetween('created_at', array($fromDate, $toDate))->get();
+        } else {
+            $data = RequestItem::table('created_at')->orderBy('created_at', 'desc')->get();
+        }
 
         $title = "Laporan";
         $pdf = PDF::loadView('pdf.laporan_request', compact('title', 'data'));
@@ -66,12 +64,13 @@ class RequestItemController extends Controller
      */
     public function store(Request $request)
     {
-        RequestItem::create([
-            'user_id' => $request->user()->id,
+        $requestItem = RequestItem::create([
+            'user_id' => Auth::user()->id,
             'name' => $request->name,
             'description' => $request->description,
             'qty' => $request->qty,
         ]);
+        return Response()->json($requestItem);
     }
 
     /**
