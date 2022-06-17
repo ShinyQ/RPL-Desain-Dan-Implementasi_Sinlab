@@ -62,16 +62,15 @@ class RequestItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RequestItemRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
-
-        RequestItem::create([
-            'user_id' => $request->user()->id,
-            'name' => $data->name,
-            'description' => $data->description,
-            'qty' => $data->qty,
+        $requestItem = RequestItem::create([
+            'user_id' => Auth::user()->id,
+            'name' => $request->name,
+            'description' => $request->description,
+            'qty' => $request->qty,
         ]);
+        return Response()->json($requestItem);
     }
 
     /**
