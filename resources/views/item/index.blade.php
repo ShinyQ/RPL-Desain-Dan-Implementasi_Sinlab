@@ -300,7 +300,7 @@
                 var to_date = $("#to_date").val();
 
                 var _token = $('input[name="_token"]').val();
-                window.open(`admin/item/export_pdf?fromDate=${from_date}&toDate=${to_date}`, 'name');
+                window.open(`item/export_pdf?fromDate=${from_date}&toDate=${to_date}`, 'name');
             });
 
         });
