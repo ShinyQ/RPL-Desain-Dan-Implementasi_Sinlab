@@ -90,6 +90,7 @@
                     <div class="form-group">
                         <label>Status</label>
                         <select class="form-control" id="statusBarang" disabled="true">
+                            <option>Menunggu Persetujuan</option>
                             <option>Diterima</option>
                             <option>Ditolak</option>
                         </select>
@@ -180,7 +181,6 @@
                     },
                     type: 'GET',
                     success: function(data) {
-                        $('#modalprocessTitle').html(`process ${data.name}`)
                         $('#statusBarang').val(data.status);
                         $('#statusBarang').attr("disabled", false);
                         $('#feedbackRequest').val(data.feedback)

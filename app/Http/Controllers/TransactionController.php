@@ -22,9 +22,9 @@ class TransactionController extends Controller
     {
         $user = Auth::user();
         $items = [];
-        if ($user->role != "super_user"){
+        if ($user->role != "super_user") {
             $items =  Transaction::where('user_id', $user->id)->paginate(5);
-        }else{
+        } else {
             $items = Transaction::latest()->paginate(5);
         }
         $title = "Halaman Transaction";
@@ -37,14 +37,11 @@ class TransactionController extends Controller
         $fromDate = $request->query('fromDate');
         $toDate = $request->query('toDate');
 
-            if($fromDate != '' && $toDate != '')
-            {
-                $data = Transaction::whereBetween('created_at', array($fromDate, $toDate))->get();
-            }
-            else
-            {
-                $data = Transaction::table('created_at')->orderBy('created_at', 'desc')->get();
-            }
+        if ($fromDate != '' && $toDate != '') {
+            $data = Transaction::whereBetween('created_at', array($fromDate, $toDate))->get();
+        } else {
+            $data = Transaction::table('created_at')->orderBy('created_at', 'desc')->get();
+        }
 
         $title = "Laporan";
         $pdf = PDF::loadView('pdf.laporan_transaksi', compact('title', 'data'));
@@ -60,12 +57,12 @@ class TransactionController extends Controller
     {
         $items = [];
         $queryParams = '';
-        if ($request->query('items')){
+        if ($request->query('items')) {
             $items = Item::whereIn('id', $request->query('items'))->get();
         }
 
         $title = "Ajukan Peminjaman";
-        return view('transaction.create', compact('title','items'));
+        return view('transaction.create', compact('title', 'items'));
     }
 
     /**$
@@ -78,14 +75,14 @@ class TransactionController extends Controller
     {
         $transaction = Transaction::create([
             'user_id' => Auth::user()->id,
-            'start_date'=> $request->startDate,
-            'deadline'=> $request->deadline,
-            'reason'=> $request->reason,
+            'start_date' => $request->startDate,
+            'deadline' => $request->deadline,
+            'reason' => $request->reason,
         ]);
-        foreach ($request->ids as $key => $id ) {
+        foreach ($request->ids as $key => $id) {
             TransactionItem::create([
-                'transaction_id'=>$transaction->id,
-                'item_id'=> $id,
+                'transaction_id' => $transaction->id,
+                'item_id' => $id,
                 'qty' => $request->qty[$key],
             ]);
         }
@@ -103,7 +100,7 @@ class TransactionController extends Controller
     {
         $title = "Peminjaman";
         $items = Item::where('id', $transaction->id)->get();
-        return view('transaction.show', compact('title','transaction', 'items'));
+        return view('transaction.show', compact('title', 'transaction', 'items'));
     }
 
     /**
@@ -112,10 +109,10 @@ class TransactionController extends Controller
      * @param  \App\Models\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function edit(TransactionRequest $requestTransaction)
+    public function edit(Transaction $transaction)
     {
         //
-        Response()->json($requestTransaction);
+        return Response()->json($transaction);
     }
 
     /**
@@ -125,7 +122,7 @@ class TransactionController extends Controller
      * @param  \App\Models\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TransactionRequest $requestTransaction,Transaction $transaction)
+    public function update(Request $request, TransactionRequest $requestTransaction, Transaction $transaction)
     {
         if ($transaction->status == "Menunggu Persetujuan") {
             $transaction->feedback = $request->feedback;
